@@ -1,2 +1,2 @@
 # vignette-images
-Image classification with brain tumor
+Brain tumor detection using image classification.
