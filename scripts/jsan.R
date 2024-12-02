@@ -1,12 +1,10 @@
 library(keras)
 library(tensorflow)
 
-# Set working directory
-setwd('~/Pstat 197/vignette-image/data')
-
 batch_size <- 32
-img_height <- 512
-img_width <- 512
+img_height <- 256
+img_width <- 256
+#increases resolution, helps model generalize
 
 # Define class names
 class_names <- c('notumor', 'pituitary', 'meningioma', 'glioma')
@@ -14,6 +12,9 @@ class_names <- c('notumor', 'pituitary', 'meningioma', 'glioma')
 # Data generators
 train_gen <- image_data_generator(rescale = 1/255, validation_split = 0.2)  # Include validation split
 test_gen <- image_data_generator(rescale = 1/255)
+
+#validation splits helps with over fitting, noticed the model before the split had a high accuracy 
+# but low validation accuracy which told us the model was overfitting.
 
 # Train dataset (80% of the training data)
 train_dataset <- flow_images_from_directory(
@@ -46,7 +47,9 @@ test_dataset <- flow_images_from_directory(
   class_mode = "categorical"
 )
 
-# Define the CNN model
+# Define the CNN model, multi-class
+# Dropout helps with overfitting, dropping out 50% of the output units randomly from
+# applied layer during training process
 cnn_model <- keras_model_sequential() %>%
   layer_conv_2d(filters = 32, kernel_size = c(3, 3), activation = 'relu', input_shape = c(img_height, img_width, 3)) %>%
   layer_max_pooling_2d(pool_size = c(2, 2)) %>%
