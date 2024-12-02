@@ -1,0 +1,188 @@
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '~/Desktop/PSTAT197/vignette-images/')
+```
+
+```{r}
+# packages
+library(tidyverse)
+library(keras3)
+```
+
+```{r}
+# the data has already been partitioned
+train_tumor <- image_dataset_from_directory('data/Training', seed = 1215)
+test_tumor <- image_dataset_from_directory('data/Testing', seed = 1215)
+```
+
+# Visualize Data
+Examine a batch of 32 images
+```{r}
+set.seed(1215)
+batch <- train_tumor %>% as_iterator() %>% iter_next()
+
+str(batch)
+```
+
+The first tensor contains image data. In this batch, there are 32 images that are 256 pixels high and 256 pixels wide. Each pixel is represented as a 3-element vector containing the RGB value associated with the pixel.
+
+The second tensor includes the labels for each image.
+
+
+```{r}
+images <- batch[[1]]
+labels <- batch[[2]]
+```
+
+```{r}
+display_image <- function(x, max = 255, margins = c(0,0,0,0)) {
+  x %>%
+    as.array() %>%
+    drop() %>%
+    as.raster(max = max) %>%
+    plot(interpolate = FALSE)
+}
+```
+
+```{r}
+par(mfrow = c(4,8), mar = c(1,1,1,1))
+
+for (i in 1:32){
+  display_image(images[i,,,])
+}
+```
+
+
+# Single Layer Model
+```{r}
+model <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  layer_flatten() %>%
+  layer_dense(4) %>%
+  layer_activation(activation = 'softmax')
+
+summary(model)
+```
+
+## compile
+```{r}
+model %>% compile(loss = 'crossentropy',
+                  optimizer = 'adamax',
+                  metrics = 'accuracy')
+```
+
+## train
+```{r}
+history <- model %>%
+  fit(train_tumor, epochs = 20)
+```
+
+## test
+```{r}
+evaluate(model, test_tumor)
+```
+The single-layer model gives testing accuracy of 0.73, which is lower than our training accuracy. This suggests potential overfitting.
+
+
+
+# Data Augmentation
+Another method to reduce overfitting is changing the brightness and contrast of the images to generate more training images.
+
+```{r}
+# create data augmentation layer
+data_augmentation <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  layer_random_brightness(factor = 0.1) %>%
+  layer_random_contrast(factor = 0.1)
+
+# visualizae augmentation
+par(mfrow = c(3,3), mar = c(1,1,1,1))
+for (i in 1:9){
+  images[1,,,, drop = FALSE] %>%
+    data_augmentation() %>%
+    display_image()
+}
+```
+
+## Update single layer model 
+```{r}
+model_aug <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  layer_random_brightness(factor = 0.1) %>%
+  layer_random_contrast(factor = 0.1) %>%
+  # layer_random_rotation(factor = 0.1) %>%
+  layer_rescaling(1./255) %>%
+  layer_flatten() %>%
+  layer_dense(4) %>%
+  layer_activation(activation = 'softmax')
+
+summary(model)
+```
+
+## compile
+```{r}
+model_aug %>% compile(loss = 'crossentropy',
+                  optimizer = 'adamax',
+                  metrics = 'accuracy')
+```
+
+## train
+```{r}
+history_aug <- model_aug %>%
+  fit(train_tumor, epochs = 20)
+```
+
+## test
+```{r}
+evaluate(model_aug, test_tumor)
+```
+
+
+# Multi Layer Model
+Simplified version of the VGG-16 model architecture. 
+```{r}
+model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  layer_conv_2d(filters = 8, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 16, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 32, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 64, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 64, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  # Fully connected layers
+  layer_flatten() %>%
+  layer_dense(units = 4096, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 4, activation = 'softmax')
+
+summary(model_vgg16)
+```
+
+## compile
+```{r}
+model_vgg16 %>% compile(loss = 'crossentropy',
+                  optimizer = 'adamax',
+                  metrics = 'accuracy')
+```
+
+## train
+```{r}
+history_vgg16 <- model_vgg16 %>%
+  fit(train_tumor, epochs = 10)
+```
+
+Training high dimensional data on a CNN with many layers takes much longer than the single layer model.
+
+## test
+```{r}
+evaluate(model_vgg16, test_tumor)
+```
+
+
+
+
+
