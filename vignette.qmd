@@ -10,9 +10,8 @@ editor: visual
 
 Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary.
 
-
 ```{r}
-library(keras)
+library(keras3)
 library(tensorflow)
 
 batch_size <- 32
@@ -31,7 +30,7 @@ test_gen <- image_data_generator(rescale = 1/255)
 # but low validation accuracy which told us the model was overfitting.
 
 # Train dataset (80% of the training data)
-train_dataset <- flow_images_from_directory( #loads and processes images from directory
+train_tumor <- flow_images_from_directory( #loads and processes images from directory
   directory = "data/Training",
   generator = train_gen,
   target_size = c(img_height, img_width),
@@ -42,7 +41,7 @@ train_dataset <- flow_images_from_directory( #loads and processes images from di
 )
 
 # Validation dataset (20% of the training data)
-validation_dataset <- flow_images_from_directory(
+validation_tumor <- flow_images_from_directory(
   directory = "data/Training",
   generator = train_gen,
   target_size = c(img_height, img_width),
@@ -53,7 +52,7 @@ validation_dataset <- flow_images_from_directory(
 )
 
 # Test dataset, no splits
-test_dataset <- flow_images_from_directory(
+test_tumor <- flow_images_from_directory(
   directory = "data/Testing",
   generator = test_gen,
   target_size = c(img_height, img_width),
@@ -61,4 +60,43 @@ test_dataset <- flow_images_from_directory(
   class_mode = "categorical"
 )
 ```
+
+## Single Layer Model
+
+First test out the most simple neural network, which is just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it 
+
+### Define model architecture
+```{r}
+model_single_layer <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
+  layer_flatten() %>%
+  layer_dense(length(class_names)) %>%
+  layer_activation(activation = 'softmax')
+
+summary(model_single_layer)
+```
+
+### Compile model
+```{r}
+model_single_layer %>% compile(
+  optimizer = 'adam',
+  loss = 'crossentropy',
+  metrics = 'accuracy'
+)
+```
+
+### Train model
+```{r}
+history_single_layer <- model_single_layer %>% fit(
+  train_tumor,
+  validation_data = validation_tumor,
+  epochs = 20
+)
+```
+
+
+
+
+
+
+
 
