@@ -114,7 +114,6 @@ model_single_layer %>% compile(
 ```
 
 ### Train model
-
 ```{r}
 history_single_layer <- model_single_layer %>% fit(
   train_tumor,
@@ -123,7 +122,7 @@ history_single_layer <- model_single_layer %>% fit(
 ```
 (train_tumor, epochs = 20)
 
-### Test
+### Test model
 ```{r}
 evaluate(model_single_layer, test_tumor)
 ```
@@ -131,6 +130,7 @@ evaluate(model_single_layer, test_tumor)
 This accuracy is not bad for a single layer model, but there is a lot of room for improvement. The testing accuracy is lower than our training accuracy, which is a sign that the model is overfitting the training data.
 
 
+## Data Augmentation
 
 
 
