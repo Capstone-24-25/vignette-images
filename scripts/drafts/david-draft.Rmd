@@ -5,6 +5,7 @@ knitr::opts_knit$set(root.dir = '~/Desktop/PSTAT197/vignette-images/')
 ```{r}
 # packages
 library(tidyverse)
+library(tensorflow)
 library(keras3)
 ```
 
@@ -51,6 +52,32 @@ for (i in 1:32){
 }
 ```
 
+## Glioma
+Form by the entrance to the spinal cord.
+```{r}
+display_image(images[7,,,])
+```
+
+## Meningioma
+Develop in the membranes surrounding the brain.
+```{r}
+display_image(images[5,,,])
+```
+
+## No tumor
+```{r}
+display_image(images[3,,,])
+```
+
+## Pituitary
+Typically small, form in the pituitary gland.
+```{r}
+display_image(images[32,,,])
+```
+
+
+
+
 
 # Single Layer Model
 ```{r}
@@ -71,6 +98,7 @@ model %>% compile(loss = 'crossentropy',
 
 ## train
 ```{r}
+tensorflow::set_random_seed(1215)
 history <- model %>%
   fit(train_tumor, epochs = 20)
 ```
@@ -79,7 +107,7 @@ history <- model %>%
 ```{r}
 evaluate(model, test_tumor)
 ```
-The single-layer model gives testing accuracy of 0.73, which is lower than our training accuracy. This suggests potential overfitting.
+The single-layer model gives testing accuracy of 0.75, which is lower than our training accuracy. This suggests potential overfitting.
 
 
 
@@ -107,7 +135,7 @@ model_aug <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
   layer_random_brightness(factor = 0.1) %>%
   layer_random_contrast(factor = 0.1) %>%
   # layer_random_rotation(factor = 0.1) %>%
-  layer_rescaling(1./255) %>%
+  # layer_rescaling(1./255) %>%
   layer_flatten() %>%
   layer_dense(4) %>%
   layer_activation(activation = 'softmax')
