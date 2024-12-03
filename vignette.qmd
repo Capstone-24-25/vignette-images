@@ -8,12 +8,12 @@ editor: visual
 
 ## Data
 
-Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary.
+Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse thus would require extensive scans to diagnose specific brain tumor types. This is where image classification comes in, specifically we will be applying a convolutional neural network model. A CNN model strengths lie in it's ability to identify patterns in images and extract features from data which is great for identifying specific brain tumors. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary tumors as well as no tumor cases. The data set we will be using contains 7023 MRI images all classified in one of the four classes.
 
 ```{r}
 library(keras3)
 library(tensorflow)
-
+#remove.packages('keras')
 batch_size <- 32
 img_height <- 256
 img_width <- 256
@@ -67,10 +67,9 @@ First test out the most simple neural network, which is just a single layer. Sin
 
 ### Define model architecture
 ```{r}
-model_single_layer <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
-  layer_flatten() %>%
-  layer_dense(length(class_names)) %>%
-  layer_activation(activation = 'softmax')
+model_single_layer <- keras_model_sequential() %>%
+  layer_flatten(input_shape = c(img_height, img_width, 3)) %>%
+  layer_dense(length(class_names), activation = 'softmax')
 
 summary(model_single_layer)
 ```
@@ -78,8 +77,8 @@ summary(model_single_layer)
 ### Compile model
 ```{r}
 model_single_layer %>% compile(
-  optimizer = 'adam',
-  loss = 'crossentropy',
+  optimizer = optimizer_adam(),
+  loss = 'categorical_crossentropy',
   metrics = 'accuracy'
 )
 ```
@@ -89,7 +88,9 @@ model_single_layer %>% compile(
 history_single_layer <- model_single_layer %>% fit(
   train_tumor,
   validation_data = validation_tumor,
-  epochs = 20
+  epochs = 20,
+  steps_per_epoch = train_tumor$samples %/% batch_size,
+  validation_steps = validation_tumor$samples %/% batch_size
 )
 ```
 
