@@ -11,7 +11,7 @@ class_names <- c('notumor', 'pituitary', 'meningioma', 'glioma')
 
 # Normalizes pixel values to [0,1]
 train_gen <- image_data_generator(rescale = 1/255, validation_split = 0.2)  # Include validation split
-test_gen <- image_data_generator(rescale = 1/255)
+test_gen <- image_data_generator(rescale = 1/255, validation_split = 0.2)
 
 #validation splits helps with over fitting, noticed the model before the split had a high accuracy 
 # but low validation accuracy which told us the model was overfitting.
@@ -47,51 +47,44 @@ test_dataset <- flow_images_from_directory(
   class_mode = "categorical"
 )
 
-# Define the CNN model, multi-class, vgg16 architecture - good for feature extraction
-# Dropout helps with overfitting, dropping out 50% of the output units randomly from
-# applied layer during training process
-cnn_model <- keras_model_sequential() %>%
-  layer_conv_2d(filters = 32, kernel_size = c(3, 3), activation = 'relu', input_shape = c(img_height, img_width, 3)) %>%
-  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
-  layer_conv_2d(filters = 64, kernel_size = c(3, 3), activation = 'relu') %>%
-  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
-  layer_flatten() %>%
-  layer_dense(units = 128, activation = 'relu') %>%
-  layer_dropout(0.5) %>%
-  layer_dense(units = length(class_names), activation = 'softmax')
-# layer_conv_2d extracts spatial features, filters - # of feature detectors, 
-# kernel_size - size of the filter matrix, relu - non-linearity
-# layer_max_pooling_2d - reduces spatial dimensions to prevent overfitting
-# layer_flatten - flattens 2D feature maps in 1D vector for input into dense layers
-# layer_dense - dense layers for classification
-# layer_dropout - randomly drops 50% of nodes during training to prevent overfitting
-# units = # of classes, softmax - generates probabilites for each class
+# Load the pre-trained ResNet50 model
+base_model <- application_resnet50(
+  weights = "imagenet",        # Use pre-trained weights on ImageNet
+  include_top = FALSE,         # Exclude the fully connected layers
+  input_shape = c(img_height, img_width, 3)  # Match your input shape
+)
 
+# Freeze the base model to retain pre-trained features
+freeze_weights(base_model)
 
+# Add custom layers for classification
+resnet_model <- keras_model_sequential() %>%
+  base_model %>%
+  layer_global_average_pooling_2d() %>%   # Reduce dimensionality
+  layer_dense(units = 128, activation = 'relu') %>%  # Add a dense layer
+  layer_dropout(rate = 0.5) %>%           # Dropout for regularization
+  layer_dense(units = length(class_names), activation = 'softmax')  # Output layer for classification
 
+unfreeze_weights(base_model, from = "conv5_block1_out")
 # Compile the model
-cnn_model %>% compile(
-  optimizer = optimizer_adam(), #adaptive optimization algorithim
-  loss = "categorical_crossentropy", #Loss function for multi-class classification
+resnet_model %>% compile(
+  optimizer = optimizer_adam(learning_rate = 1e-4),  # Lower learning rate for fine-tuning
+  loss = "categorical_crossentropy",
   metrics = c("accuracy")
 )
 
 # Train the model
-history <- cnn_model %>% fit(
+history <- resnet_model %>% fit(
   train_dataset,
   validation_data = validation_dataset,
   epochs = 10,
-  steps_per_epoch = train_dataset$samples %/% batch_size, ## of batches per epoch to process
+  steps_per_epoch = train_dataset$samples %/% batch_size,
   validation_steps = validation_dataset$samples %/% batch_size
 )
 
-# Save the model
-cnn_model %>% save_model_hdf5("brain_tumor_model.h5")
-
-# Evaluate the model on the test dataset
-evaluation <- cnn_model %>% evaluate(
+# Evaluate on the test dataset
+evaluation <- resnet_model %>% evaluate(
   test_dataset,
   steps = test_dataset$samples %/% batch_size
 )
 cat("Test accuracy:", evaluation["accuracy"], "\n")
-

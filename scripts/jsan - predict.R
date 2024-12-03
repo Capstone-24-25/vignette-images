@@ -1,7 +1,6 @@
 library(caret)  # For confusion matrix visualization
 library(tensorflow)
 
-source('scripts/jsan.R')
 load('data/Testing')
 
 set.seed(2222)
