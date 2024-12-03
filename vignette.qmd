@@ -17,6 +17,8 @@ library(tidyverse)
 library(tensorflow)
 library(keras3)
 
+tensorflow::set_random_seed(197)
+
 # the data has already been partitioned
 batch_size <- 32
 img_height <- 256
@@ -26,21 +28,20 @@ train_tumor <- image_dataset_from_directory(
   directory = 'data/Training',
   image_size = c(img_height, img_width),
   batch_size = batch_size,
-  seed = 1111
+  seed = 197
 )
 
 test_tumor <- image_dataset_from_directory(
   directory = 'data/Testing',
   image_size = c(img_height, img_width),
   batch_size = batch_size,
-  seed = 1111
+  seed = 197
 )
 ```
 
 ## Visualize Data
 Examine a batch of 32 images.
 ```{r}
-set.seed(1215)
 batch <- train_tumor %>% as_iterator() %>% iter_next()
 
 str(batch)
@@ -73,35 +74,37 @@ for (i in 1:32){
 Glioma is a type of brain tumor that originates from glial cells in the spinal cord and brain, it is the most common cancerous brain tumor and makes up one-third of all brain tumors.
 
 ```{r}
-display_image(images[5,,,])
+display_image(images[1,,,])
 ```
 
 ### What is meningioma?
 
 A type of brain tumor that grows in the membrane that cover the brain and spinal cord, it is the most common tumor type in the head but are usually non-cancerous, 10-15% are cancerous.
+
 ```{r}
-display_image(images[8,,,])
+display_image(images[13,,,])
 ```
 
-### What is pituitary?
+### What is a  pituitary tumor?
 
 The pituitary is a small gland found at the base of the brain, directly in line with the top of your nose. They account for 10-15% of all brain tumors and most are non-cancerous, causing no symptoms. Rarely is it cancerous, less than 0.1%.
 
 ```{r}
-display_image(images[3,,,])
+display_image(images[32,,,])
 ```
 
 ### Non-Tumor
+
 The data set also contains images of non-tumor brains.
 
 ```{r}
-display_image(images[7,,,])
+display_image(images[30,,,])
 ```
 
 
 ## Single Layer Model
 
-First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it before feeding it into the model.
+First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model.
 
 ### Define model architecture
 
@@ -116,33 +119,34 @@ summary(model_single_layer)
 
 ### Compile model
 
-The adam optimizer is good for general use neural network training, so it should work for our model. The crossentropy loss function is typically used for classification problems, and the neural network's objective is to minimize the value of this function. The optimizer will use the loss function's gradient to try to find the minimum. Finally, we use accuracy to judge the effectiveness of the model, which is simply the number of correct predictions divided by the number of total predictions.
+The adam optimizer is good for general use neural network training, so it should work for our model. The crossentropy loss function is typically used for classification problems, and the neural network's objective is to minimize the value of this function. The optimizer will use the loss function's gradient to try to find the lowest point. Finally, we use accuracy to judge the effectiveness of the model, which is simply the number of correct predictions divided by the number of total predictions.
 
 ```{r}
 model_single_layer %>% compile(
-  optimizer = optimizer_adam(),
-  loss = 'categorical_crossentropy',
+  optimizer = 'adam',
+  loss = 'crossentropy',
   metrics = 'accuracy'
 )
 ```
 
 ### Train model
+
 ```{r}
-history_single_layer <- model_single_layer %>% fit(
-  train_tumor,
-  epochs = 20
-)
+history_single_layer <- model_single_layer %>%
+  fit(train_tumor, epochs = 20)
 ```
 
 (train_tumor, epochs = 20)
 
 
 ### Test model
+
 ```{r}
 evaluate(model_single_layer, test_tumor)
 ```
 
 This accuracy is not bad for a single layer model, but there is a lot of room for improvement. The testing accuracy is lower than our training accuracy, which is a sign that the model is overfitting the training data.
+
 
 
 ## Data Augmentation
@@ -153,7 +157,7 @@ Data augmentation is a technique often used to reduce overfitting. It involves m
 # create data augmentation layer
 data_augmentation <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
   layer_random_brightness(factor = 0.1) %>%
-  layer_random_contrast(factor = 0.1)
+  layer_random_contrast(factor = 0.2)
 
 # visualizae changes
 par(mfrow = c(3,3), mar = c(1,1,1,1))
@@ -165,10 +169,11 @@ for (i in 1:9){
 ```
 
 ### Update single layer model
+
 ```{r}
 model_aug <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
   layer_random_brightness(factor = 0.1) %>%
-  layer_random_contrast(factor = 0.1) %>%
+  layer_random_contrast(factor = 0.2) %>%
   layer_flatten() %>%
   layer_dense(4) %>%
   layer_activation(activation = 'softmax')
@@ -177,19 +182,80 @@ summary(model_aug)
 ```
 
 ### Compile model
+
 ```{r}
 model_aug %>% compile(
   optimizer = 'adam',
-  loss = 'categorical_crossentropy',
+  loss = 'crossentropy',
   metrics = 'accuracy'
 )
 ```
 
 ### Train model
+
 ```{r}
 history_aug <- model_aug %>%
   fit(train_tumor, epochs = 20)
 ```
 
+### Test model
+```{r}
+evaluate(model_aug, test_tumor)
+```
+
+Data augmentation provides a boost in testing accuracy due to reduced overfitting.
+
+
+## Multi Layer Model
+Simplified version of the VGG-16 model architecture. 
+
+```{r}
+model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  
+  # Convolutional layers
+  layer_conv_2d(filters = 8, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 16, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 32, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 64, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  layer_conv_2d(filters = 64, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
+  layer_max_pooling_2d(pool_size = c(2,2), strides = c(2,2)) %>%
+  
+  # Fully connected layers
+  layer_flatten() %>%
+  layer_dense(units = 4096, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 4, activation = 'softmax')
+
+summary(model_vgg16)
+```
+
+## Compile model
+
+```{r}
+model_vgg16 %>% compile(loss = 'crossentropy',
+                  optimizer = 'adam',
+                  metrics = 'accuracy')
+```
+
+## Train model
+
+```{r}
+history_vgg16 <- model_vgg16 %>%
+  fit(train_tumor, epochs = 10)
+```
+
+## Test model
+
+```{r}
+evaluate(model_vgg16, test_tumor)
+```
 
 
