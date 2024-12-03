@@ -97,8 +97,6 @@ display_image(images[3,,,])
 ```
 
 
-
-
 ## Single Layer Model
 
 First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it before feeding it into the model.
@@ -145,11 +143,51 @@ evaluate(model_single_layer, test_tumor)
 This accuracy is not bad for a single layer model, but there is a lot of room for improvement. The testing accuracy is lower than our training accuracy, which is a sign that the model is overfitting the training data.
 
 
-
 ## Data Augmentation
 
+Data augmentation is a technique often used to reduce overfitting. It involves making alterations to the training data, such as random rotations and flipping, to generate new training data and make the model more robust to unseen data. Here, we will augment the data using changes to brightness and contrast of the training images.
 
+```{r}
+# create data augmentation layer
+data_augmentation <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  layer_random_brightness(factor = 0.1) %>%
+  layer_random_contrast(factor = 0.1)
 
+# visualizae changes
+par(mfrow = c(3,3), mar = c(1,1,1,1))
+for (i in 1:9){
+  images[1,,,, drop = FALSE] %>%
+    data_augmentation() %>%
+    display_image()
+}
+```
+
+### Update single layer model
+```{r}
+model_aug <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
+  layer_random_brightness(factor = 0.1) %>%
+  layer_random_contrast(factor = 0.1) %>%
+  layer_flatten() %>%
+  layer_dense(4) %>%
+  layer_activation(activation = 'softmax')
+
+summary(model_aug)
+```
+
+### Compile model
+```{r}
+model_aug %>% compile(
+  optimizer = 'adam',
+  loss = 'categorical_crossentropy',
+  metrics = 'accuracy'
+)
+```
+
+### Train model
+```{r}
+history_aug <- model_aug %>%
+  fit(train_tumor, epochs = 20)
+```
 
 
 
