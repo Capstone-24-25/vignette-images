@@ -9,7 +9,7 @@ img_width <- 256
 # Define class names
 class_names <- c('notumor', 'pituitary', 'meningioma', 'glioma')
 
-# Data generators
+# Normalizes pixel values to [0,1]
 train_gen <- image_data_generator(rescale = 1/255, validation_split = 0.2)  # Include validation split
 test_gen <- image_data_generator(rescale = 1/255)
 
@@ -17,7 +17,7 @@ test_gen <- image_data_generator(rescale = 1/255)
 # but low validation accuracy which told us the model was overfitting.
 
 # Train dataset (80% of the training data)
-train_dataset <- flow_images_from_directory(
+train_dataset <- flow_images_from_directory( #loads and processes images from directory
   directory = "data/Training",
   generator = train_gen,
   target_size = c(img_height, img_width),
@@ -34,11 +34,11 @@ validation_dataset <- flow_images_from_directory(
   target_size = c(img_height, img_width),
   batch_size = batch_size,
   class_mode = "categorical",
-  subset = "validation",  # Specify validation subset
+  subset = "validation",  # Specify validation subset, loads 20% for validation
   seed = 1111
 )
 
-# Test dataset
+# Test dataset, no splits
 test_dataset <- flow_images_from_directory(
   directory = "data/Testing",
   generator = test_gen,
@@ -59,11 +59,20 @@ cnn_model <- keras_model_sequential() %>%
   layer_dense(units = 128, activation = 'relu') %>%
   layer_dropout(0.5) %>%
   layer_dense(units = length(class_names), activation = 'softmax')
+# layer_conv_2d extracts spatial features, filters - # of feature detectors, 
+# kernel_size - size of the filter matrix, relu - non-linearity
+# layer_max_pooling_2d - reduces spatial dimensions to prevent overfitting
+# layer_flatten - flattens 2D feature maps in 1D vector for input into dense layers
+# layer_dense - dense layers for classification
+# layer_dropout - randomly drops 50% of nodes during training to prevent overfitting
+# units = # of classes, softmax - generates probabilites for each class
+
+
 
 # Compile the model
 cnn_model %>% compile(
-  optimizer = optimizer_adam(),
-  loss = "categorical_crossentropy",
+  optimizer = optimizer_adam(), #adaptive optimization algorithim
+  loss = "categorical_crossentropy", #Loss function for multi-class classification
   metrics = c("accuracy")
 )
 
@@ -72,7 +81,7 @@ history <- cnn_model %>% fit(
   train_dataset,
   validation_data = validation_dataset,
   epochs = 10,
-  steps_per_epoch = train_dataset$samples %/% batch_size,
+  steps_per_epoch = train_dataset$samples %/% batch_size, ## of batches per epoch to process
   validation_steps = validation_dataset$samples %/% batch_size
 )
 
