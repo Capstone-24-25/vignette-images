@@ -8,7 +8,7 @@ editor: visual
 
 ## Data
 
-Worldwide 300,000 people are diagnosed with brain tumors annually.
+Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary.
 
 
 ```{r}
