@@ -11,71 +11,48 @@ editor: visual
 Worldwide 300,000 people are diagnosed with brain tumors annually.
 
 ```{r}
-library(keras3)
+# packages
+library(tidyverse)
 library(tensorflow)
+library(keras3)
 
-batch_size <- 32
+# the data has already been partitioned
 img_height <- 256
 img_width <- 256
-#increases resolution, helps model generalize
+batch_size <- 32
 
-# Define class names
-class_names <- c('notumor', 'pituitary', 'meningioma', 'glioma')
-
-# Normalizes pixel values to [0,1]
-train_gen <- image_data_generator(rescale = 1/255, validation_split = 0.2)  # Include validation split
-test_gen <- image_data_generator(rescale = 1/255)
-
-#validation splits helps with over fitting, noticed the model before the split had a high accuracy 
-# but low validation accuracy which told us the model was overfitting.
-
-# Train dataset (80% of the training data)
-train_tumor <- flow_images_from_directory( #loads and processes images from directory
-  directory = "data/Training",
-  generator = train_gen,
-  target_size = c(img_height, img_width),
+train_tumor <- image_dataset_from_directory(
+  directory = 'data/Training',
+  image_size = c(img_height, img_width),
   batch_size = batch_size,
-  class_mode = "categorical",
-  subset = "training",  # Specify training subset
   seed = 1111
 )
 
-# Validation dataset (20% of the training data)
-validation_tumor <- flow_images_from_directory(
-  directory = "data/Training",
-  generator = train_gen,
-  target_size = c(img_height, img_width),
+test_tumor <- image_dataset_from_directory(
+  directory = 'data/Testing',
+  image_size = c(img_height, img_width),
   batch_size = batch_size,
-  class_mode = "categorical",
-  subset = "validation",  # Specify validation subset, loads 20% for validation
   seed = 1111
-)
-
-# Test dataset, no splits
-test_tumor <- flow_images_from_directory(
-  directory = "data/Testing",
-  generator = test_gen,
-  target_size = c(img_height, img_width),
-  batch_size = batch_size,
-  class_mode = "categorical"
 )
 ```
 
 ## Single Layer Model
 
-First test out the most simple neural network, which is just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it 
+First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it before feeding it into the model.
 
 ### Define model architecture
 ```{r}
 model_single_layer <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
   layer_flatten() %>%
-  layer_dense(length(class_names)) %>%
+  layer_dense(4) %>%
   layer_activation(activation = 'softmax')
 
 summary(model_single_layer)
 ```
 
 ### Compile model
+The adam optimizer is good for general use neural network training, so it should work for our model. The crossentropy loss function is typically used for classification problems, and the neural network's objective is to minimize the value of this function. The optimizer will use the loss function's gradient to try to find the minimum. Finally, we use accuracy to judge the effectiveness of the model, which is simply the number of correct predictions divided by the number of total predictions.
+
 ```{r}
 model_single_layer %>% compile(
   optimizer = 'adam',
@@ -85,13 +62,25 @@ model_single_layer %>% compile(
 ```
 
 ### Train model
+
 ```{r}
 history_single_layer <- model_single_layer %>% fit(
   train_tumor,
-  validation_data = validation_tumor,
   epochs = 20
 )
 ```
+(train_tumor, epochs = 20)
+
+### Test
+```{r}
+evaluate(model_single_layer, test_tumor)
+```
+
+This accuracy is not bad for a single layer model, but there is a lot of room for improvement. The testing accuracy is lower than our training accuracy, which is a sign that the model is overfitting the training data.
+
+
+
+
 
 
 
