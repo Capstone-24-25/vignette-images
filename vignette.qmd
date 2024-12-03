@@ -36,6 +36,58 @@ test_tumor <- image_dataset_from_directory(
 )
 ```
 
+### Visualize Data
+```{r}
+set.seed(1111)
+batch <- train_tumor %>% as_iterator() %>% iter_next()
+
+str(batch)
+```
+The first tensor contains image data. In this batch, there are 32 images that are 256 pixels high and 256 pixels wide. Each pixel is represented as a 3-element vector containing the RGB value associated with the pixel.
+
+The second tensor includes the labels for each image.
+
+```{r}
+images <- batch[[1]]
+labels <- batch[[2]]
+
+display_image <- function(x, max = 255, margins = c(0,0,0,0)) {
+  x %>%
+    as.array() %>%
+    drop() %>%
+    as.raster(max = max) %>%
+    plot(interpolate = FALSE)
+}
+
+par(mfrow = c(4,8), mar = c(1,1,1,1))
+for (i in 1:32){
+  display_image(images[i,,,])
+}
+```
+
+### Glioma
+```{r}
+display_image(images[13,,,])
+```
+
+### Meningioma
+```{r}
+display_image(images[8,,,])
+```
+
+### No Tumor
+```{r}
+display_image(images[5,,,])
+```
+
+### Pituitary
+```{r}
+display_image(images[21,,,])
+```
+
+
+
+
 ## Single Layer Model
 
 First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it before feeding it into the model.
