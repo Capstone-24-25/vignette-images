@@ -8,7 +8,7 @@ editor: visual
 
 ## Data
 
-Worldwide 300,000 people are diagnosed with brain tumors annually.
+Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse thus would require extensive scans to diagnose specific brain tumor types. This is where image classification comes in, specifically we will be applying a convolutional neural network model. A CNN model strengths lie in it's ability to identify patterns in images and extract features from data which is great for identifying specific brain tumors. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary tumors as well as no tumor cases. The data set we will be using contains 7023 MRI images all classified in one of the four classes.
 
 ```{r}
 # packages
@@ -17,9 +17,9 @@ library(tensorflow)
 library(keras3)
 
 # the data has already been partitioned
+batch_size <- 32
 img_height <- 256
 img_width <- 256
-batch_size <- 32
 
 train_tumor <- image_dataset_from_directory(
   directory = 'data/Training',
@@ -55,8 +55,8 @@ The adam optimizer is good for general use neural network training, so it should
 
 ```{r}
 model_single_layer %>% compile(
-  optimizer = 'adam',
-  loss = 'crossentropy',
+  optimizer = optimizer_adam(),
+  loss = 'categorical_crossentropy',
   metrics = 'accuracy'
 )
 ```
