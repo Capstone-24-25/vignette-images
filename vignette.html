@@ -237,16 +237,19 @@ The following objects are masked from 'package:tensorflow':
 <h3 class="anchored" data-anchor-id="define-model-architecture">Define model architecture</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model_single_layer <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>(<span class="at">input_shape =</span> <span class="fu">c</span>(img_height, img_width, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_activation</span>(<span class="at">activation =</span> <span class="st">'softmax'</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_single_layer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_rescaling</span>(<span class="fl">1.</span><span class="sc">/</span><span class="dv">255</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_activation</span>(<span class="at">activation =</span> <span class="st">'softmax'</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_single_layer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "sequential"
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
 ┃ Layer (type)                      ┃ Output Shape             ┃       Param # ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ rescaling (Rescaling)             │ (None, 256, 256, 3)      │             0 │
+├───────────────────────────────────┼──────────────────────────┼───────────────┤
 │ flatten (Flatten)                 │ (None, 196608)           │             0 │
 ├───────────────────────────────────┼──────────────────────────┼───────────────┤
 │ dense (Dense)                     │ (None, 4)                │       786,436 │
@@ -277,45 +280,45 @@ The following objects are masked from 'package:tensorflow':
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-179/179 - 2s - 10ms/step - accuracy: 0.6138 - loss: 890.9604
+179/179 - 2s - 11ms/step - accuracy: 0.6217 - loss: 4.4001
 Epoch 2/20
-179/179 - 2s - 9ms/step - accuracy: 0.7269 - loss: 423.6225
+179/179 - 2s - 10ms/step - accuracy: 0.7356 - loss: 1.8544
 Epoch 3/20
-179/179 - 2s - 9ms/step - accuracy: 0.7341 - loss: 521.5053
+179/179 - 2s - 10ms/step - accuracy: 0.7495 - loss: 1.9915
 Epoch 4/20
-179/179 - 2s - 9ms/step - accuracy: 0.7978 - loss: 360.9081
+179/179 - 2s - 10ms/step - accuracy: 0.8097 - loss: 1.2745
 Epoch 5/20
-179/179 - 2s - 9ms/step - accuracy: 0.7990 - loss: 349.9425
+179/179 - 2s - 10ms/step - accuracy: 0.8079 - loss: 1.4008
 Epoch 6/20
-179/179 - 2s - 9ms/step - accuracy: 0.8129 - loss: 367.8296
+179/179 - 2s - 10ms/step - accuracy: 0.8718 - loss: 0.6882
 Epoch 7/20
-179/179 - 2s - 9ms/step - accuracy: 0.8234 - loss: 334.7192
+179/179 - 2s - 10ms/step - accuracy: 0.8417 - loss: 1.0120
 Epoch 8/20
-179/179 - 2s - 9ms/step - accuracy: 0.8459 - loss: 267.5849
+179/179 - 2s - 10ms/step - accuracy: 0.8382 - loss: 1.1551
 Epoch 9/20
-179/179 - 2s - 9ms/step - accuracy: 0.8624 - loss: 219.3370
+179/179 - 2s - 10ms/step - accuracy: 0.8445 - loss: 1.2285
 Epoch 10/20
-179/179 - 2s - 9ms/step - accuracy: 0.8325 - loss: 358.5074
+179/179 - 2s - 10ms/step - accuracy: 0.8876 - loss: 0.7823
 Epoch 11/20
-179/179 - 2s - 9ms/step - accuracy: 0.8550 - loss: 296.3944
+179/179 - 2s - 10ms/step - accuracy: 0.8894 - loss: 0.7178
 Epoch 12/20
-179/179 - 2s - 9ms/step - accuracy: 0.8843 - loss: 205.5092
+179/179 - 2s - 10ms/step - accuracy: 0.8817 - loss: 0.8498
 Epoch 13/20
-179/179 - 2s - 9ms/step - accuracy: 0.8843 - loss: 214.1940
+179/179 - 2s - 10ms/step - accuracy: 0.8328 - loss: 1.5485
 Epoch 14/20
-179/179 - 2s - 9ms/step - accuracy: 0.8890 - loss: 194.3040
+179/179 - 2s - 10ms/step - accuracy: 0.8855 - loss: 0.9802
 Epoch 15/20
-179/179 - 2s - 9ms/step - accuracy: 0.8918 - loss: 204.0364
+179/179 - 2s - 10ms/step - accuracy: 0.8983 - loss: 0.7506
 Epoch 16/20
-179/179 - 2s - 9ms/step - accuracy: 0.9000 - loss: 181.8521
+179/179 - 2s - 10ms/step - accuracy: 0.9156 - loss: 0.5328
 Epoch 17/20
-179/179 - 2s - 9ms/step - accuracy: 0.9014 - loss: 170.9771
+179/179 - 2s - 10ms/step - accuracy: 0.9293 - loss: 0.4336
 Epoch 18/20
-179/179 - 2s - 9ms/step - accuracy: 0.9032 - loss: 180.2068
+179/179 - 2s - 10ms/step - accuracy: 0.9398 - loss: 0.3182
 Epoch 19/20
-179/179 - 2s - 9ms/step - accuracy: 0.9235 - loss: 119.8818
+179/179 - 2s - 10ms/step - accuracy: 0.9098 - loss: 0.6305
 Epoch 20/20
-179/179 - 2s - 9ms/step - accuracy: 0.8913 - loss: 217.8873</code></pre>
+179/179 - 2s - 10ms/step - accuracy: 0.9027 - loss: 0.7153</code></pre>
 </div>
 </div>
 <p>(train_tumor, epochs = 20)</p>
@@ -325,14 +328,14 @@ Epoch 20/20
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_single_layer, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 0s - 8ms/step - accuracy: 0.7536 - loss: 1140.1516</code></pre>
+<pre><code>41/41 - 0s - 9ms/step - accuracy: 0.8246 - loss: 2.2198</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
-[1] 0.7536232
+[1] 0.8245614
 
 $loss
-[1] 1140.152</code></pre>
+[1] 2.219782</code></pre>
 </div>
 </div>
 <p>This accuracy is not bad for a single layer model, but there is a lot of room for improvement. The testing accuracy is lower than our training accuracy, which is a sign that the model is overfitting the training data.</p>
@@ -345,7 +348,7 @@ $loss
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data augmentation layer</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>data_augmentation <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>(<span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_brightness</span>(<span class="at">factor =</span> <span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_contrast</span>(<span class="at">factor =</span> <span class="fl">0.2</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_contrast</span>(<span class="at">factor =</span> <span class="fl">0.15</span>)</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># visualizae changes</span></span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
@@ -363,12 +366,13 @@ $loss
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>model_aug <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>(<span class="at">input_shape =</span> <span class="fu">c</span>(img_height, img_width, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_brightness</span>(<span class="at">factor =</span> <span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_contrast</span>(<span class="at">factor =</span> <span class="fl">0.2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_activation</span>(<span class="at">activation =</span> <span class="st">'softmax'</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_aug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_contrast</span>(<span class="at">factor =</span> <span class="fl">0.15</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_rescaling</span>(<span class="fl">1.</span><span class="sc">/</span><span class="dv">255</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_activation</span>(<span class="at">activation =</span> <span class="st">'softmax'</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_aug)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "sequential_2"
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
@@ -379,6 +383,8 @@ $loss
 ├───────────────────────────────────┼──────────────────────────┼───────────────┤
 │ random_contrast_1                 │ (None, 256, 256, 3)      │             0 │
 │ (RandomContrast)                  │                          │               │
+├───────────────────────────────────┼──────────────────────────┼───────────────┤
+│ rescaling_1 (Rescaling)           │ (None, 256, 256, 3)      │             0 │
 ├───────────────────────────────────┼──────────────────────────┼───────────────┤
 │ flatten_1 (Flatten)               │ (None, 196608)           │             0 │
 ├───────────────────────────────────┼──────────────────────────┼───────────────┤
@@ -409,45 +415,45 @@ $loss
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-179/179 - 3s - 17ms/step - accuracy: 0.5725 - loss: 1154.9441
+179/179 - 3s - 18ms/step - accuracy: 0.5840 - loss: 4.6593
 Epoch 2/20
-179/179 - 3s - 15ms/step - accuracy: 0.6653 - loss: 693.6108
+179/179 - 3s - 16ms/step - accuracy: 0.6908 - loss: 2.2462
 Epoch 3/20
-179/179 - 3s - 15ms/step - accuracy: 0.7166 - loss: 603.6891
+179/179 - 3s - 16ms/step - accuracy: 0.7409 - loss: 2.0748
 Epoch 4/20
-179/179 - 3s - 15ms/step - accuracy: 0.7540 - loss: 494.3239
+179/179 - 3s - 16ms/step - accuracy: 0.7644 - loss: 1.6070
 Epoch 5/20
-179/179 - 3s - 15ms/step - accuracy: 0.7917 - loss: 392.7177
+179/179 - 3s - 16ms/step - accuracy: 0.7826 - loss: 1.5164
 Epoch 6/20
-179/179 - 3s - 15ms/step - accuracy: 0.7969 - loss: 388.9526
+179/179 - 3s - 16ms/step - accuracy: 0.7729 - loss: 2.1454
 Epoch 7/20
-179/179 - 3s - 16ms/step - accuracy: 0.8018 - loss: 389.3607
+179/179 - 3s - 16ms/step - accuracy: 0.8283 - loss: 1.1941
 Epoch 8/20
-179/179 - 3s - 16ms/step - accuracy: 0.8109 - loss: 371.3038
+179/179 - 3s - 16ms/step - accuracy: 0.8136 - loss: 1.3794
 Epoch 9/20
-179/179 - 3s - 15ms/step - accuracy: 0.8107 - loss: 397.9504
+179/179 - 3s - 16ms/step - accuracy: 0.8146 - loss: 1.6076
 Epoch 10/20
-179/179 - 3s - 15ms/step - accuracy: 0.8423 - loss: 300.9575
+179/179 - 3s - 16ms/step - accuracy: 0.8736 - loss: 0.7881
 Epoch 11/20
-179/179 - 3s - 15ms/step - accuracy: 0.8533 - loss: 270.4357
+179/179 - 3s - 16ms/step - accuracy: 0.8598 - loss: 1.0170
 Epoch 12/20
-179/179 - 3s - 15ms/step - accuracy: 0.8484 - loss: 288.2401
+179/179 - 3s - 16ms/step - accuracy: 0.8617 - loss: 1.0657
 Epoch 13/20
-179/179 - 3s - 15ms/step - accuracy: 0.8536 - loss: 266.9264
+179/179 - 3s - 16ms/step - accuracy: 0.8930 - loss: 0.6121
 Epoch 14/20
-179/179 - 3s - 15ms/step - accuracy: 0.8228 - loss: 424.8945
+179/179 - 3s - 16ms/step - accuracy: 0.8412 - loss: 1.2327
 Epoch 15/20
-179/179 - 3s - 15ms/step - accuracy: 0.8647 - loss: 287.7430
+179/179 - 3s - 16ms/step - accuracy: 0.8841 - loss: 0.8156
 Epoch 16/20
-179/179 - 3s - 16ms/step - accuracy: 0.8424 - loss: 415.4188
+179/179 - 3s - 16ms/step - accuracy: 0.8703 - loss: 1.0433
 Epoch 17/20
-179/179 - 3s - 16ms/step - accuracy: 0.8792 - loss: 266.1107
+179/179 - 3s - 16ms/step - accuracy: 0.8971 - loss: 0.6589
 Epoch 18/20
-179/179 - 3s - 16ms/step - accuracy: 0.8599 - loss: 334.0439
+179/179 - 3s - 16ms/step - accuracy: 0.8775 - loss: 0.9452
 Epoch 19/20
-179/179 - 3s - 15ms/step - accuracy: 0.8706 - loss: 283.7302
+179/179 - 3s - 16ms/step - accuracy: 0.8866 - loss: 0.8810
 Epoch 20/20
-179/179 - 3s - 15ms/step - accuracy: 0.9048 - loss: 170.8164</code></pre>
+179/179 - 3s - 16ms/step - accuracy: 0.8881 - loss: 0.9086</code></pre>
 </div>
 </div>
 </section>
@@ -456,14 +462,14 @@ Epoch 20/20
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_aug, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 0s - 8ms/step - accuracy: 0.8490 - loss: 502.9663</code></pre>
+<pre><code>41/41 - 0s - 8ms/step - accuracy: 0.8589 - loss: 1.8198</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
-[1] 0.8489702
+[1] 0.8588864
 
 $loss
-[1] 502.9663</code></pre>
+[1] 1.819833</code></pre>
 </div>
 </div>
 <p>Data augmentation provides a boost in testing accuracy due to reduced overfitting.</p>
@@ -472,37 +478,54 @@ $loss
 <section id="multi-layer-model" class="level2">
 <h2 class="anchored" data-anchor-id="multi-layer-model">Multi Layer Model</h2>
 <p>Simplified version of the VGG-16 model architecture.</p>
+<p>Explanation of what the different types of layers do:</p>
+<p>convolutional 2d layer: Extracts features from the image, which is specified by the number of filters. Padding adds pixels around the image to ensure that the input size and output size are matching.</p>
+<p>max pooling layer: Takes the maximum value from each 2x2 grid of pixels. This reduces the dimensionality and makes the model more robust to small changes.</p>
+<p>dropout layer: Randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.</p>
+<p>dense layer: Typically at the end of model, connects each neuron to the output layer in order to make the final prediction. We used the softmax activation function since there are multiple classes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model_vgg16 <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>(<span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convolutional layers</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">8</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Preprocessing layers</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_brightness</span>(<span class="at">factor =</span> <span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_random_contrast</span>(<span class="at">factor =</span> <span class="fl">0.15</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_rescaling</span>(<span class="fl">1.</span><span class="sc">/</span><span class="dv">255</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">16</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">32</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fully connected layers</span></span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">4096</span>, <span class="at">activation =</span> <span class="st">'relu'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dropout</span>(<span class="at">rate =</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">4</span>, <span class="at">activation =</span> <span class="st">'softmax'</span>)</span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_vgg16)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convolutional layers</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">8</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">16</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">32</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">64</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">activation =</span> <span class="st">'relu'</span>, <span class="at">padding =</span> <span class="st">'same'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fully connected layers</span></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_flatten</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">4096</span>, <span class="at">activation =</span> <span class="st">'relu'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dropout</span>(<span class="at">rate =</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">4</span>, <span class="at">activation =</span> <span class="st">'softmax'</span>)</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_vgg16)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "sequential_3"
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
 ┃ Layer (type)                      ┃ Output Shape             ┃       Param # ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ random_brightness_2               │ (None, 256, 256, 3)      │             0 │
+│ (RandomBrightness)                │                          │               │
+├───────────────────────────────────┼──────────────────────────┼───────────────┤
+│ random_contrast_2                 │ (None, 256, 256, 3)      │             0 │
+│ (RandomContrast)                  │                          │               │
+├───────────────────────────────────┼──────────────────────────┼───────────────┤
+│ rescaling_2 (Rescaling)           │ (None, 256, 256, 3)      │             0 │
+├───────────────────────────────────┼──────────────────────────┼───────────────┤
 │ conv2d (Conv2D)                   │ (None, 256, 256, 8)      │           224 │
 ├───────────────────────────────────┼──────────────────────────┼───────────────┤
 │ max_pooling2d (MaxPooling2D)      │ (None, 128, 128, 8)      │             0 │
@@ -552,25 +575,25 @@ $loss
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/10
-179/179 - 41s - 231ms/step - accuracy: 0.7131 - loss: 2.8757
+179/179 - 43s - 237ms/step - accuracy: 0.7010 - loss: 0.7064
 Epoch 2/10
-179/179 - 40s - 225ms/step - accuracy: 0.8739 - loss: 0.3503
+179/179 - 41s - 232ms/step - accuracy: 0.8206 - loss: 0.4610
 Epoch 3/10
-179/179 - 40s - 226ms/step - accuracy: 0.9109 - loss: 0.2605
+179/179 - 42s - 232ms/step - accuracy: 0.8713 - loss: 0.3300
 Epoch 4/10
-179/179 - 40s - 226ms/step - accuracy: 0.9251 - loss: 0.2110
+179/179 - 42s - 235ms/step - accuracy: 0.9060 - loss: 0.2552
 Epoch 5/10
-179/179 - 40s - 224ms/step - accuracy: 0.9450 - loss: 0.1546
+179/179 - 43s - 239ms/step - accuracy: 0.9389 - loss: 0.1633
 Epoch 6/10
-179/179 - 40s - 224ms/step - accuracy: 0.9627 - loss: 0.1096
+179/179 - 42s - 235ms/step - accuracy: 0.9510 - loss: 0.1264
 Epoch 7/10
-179/179 - 41s - 230ms/step - accuracy: 0.9708 - loss: 0.0860
+179/179 - 42s - 235ms/step - accuracy: 0.9666 - loss: 0.1005
 Epoch 8/10
-179/179 - 40s - 223ms/step - accuracy: 0.9680 - loss: 0.0925
+179/179 - 42s - 237ms/step - accuracy: 0.9706 - loss: 0.0912
 Epoch 9/10
-179/179 - 40s - 224ms/step - accuracy: 0.9639 - loss: 0.0937
+179/179 - 42s - 237ms/step - accuracy: 0.9723 - loss: 0.0716
 Epoch 10/10
-179/179 - 40s - 226ms/step - accuracy: 0.9790 - loss: 0.0602</code></pre>
+179/179 - 42s - 232ms/step - accuracy: 0.9827 - loss: 0.0485</code></pre>
 </div>
 </div>
 </section>
@@ -579,14 +602,14 @@ Epoch 10/10
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_vgg16, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 3s - 63ms/step - accuracy: 0.9283 - loss: 0.2656</code></pre>
+<pre><code>41/41 - 3s - 65ms/step - accuracy: 0.9542 - loss: 0.1587</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
-[1] 0.928299
+[1] 0.9542334
 
 $loss
-[1] 0.2656266</code></pre>
+[1] 0.1587</code></pre>
 </div>
 </div>
 </section>
