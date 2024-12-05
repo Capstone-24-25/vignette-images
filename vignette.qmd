@@ -110,6 +110,7 @@ First we test out the most basic neural network, which includes just a single la
 
 ```{r}
 model_single_layer <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
+  layer_rescaling(1./255) %>%
   layer_flatten() %>%
   layer_dense(4) %>%
   layer_activation(activation = 'softmax')
@@ -136,7 +137,6 @@ history_single_layer <- model_single_layer %>%
   fit(train_tumor, epochs = 20)
 ```
 
-(train_tumor, epochs = 20)
 
 
 ### Test model
@@ -157,7 +157,7 @@ Data augmentation is a technique often used to reduce overfitting. It involves m
 # create data augmentation layer
 data_augmentation <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
   layer_random_brightness(factor = 0.1) %>%
-  layer_random_contrast(factor = 0.2)
+  layer_random_contrast(factor = 0.15)
 
 # visualizae changes
 par(mfrow = c(3,3), mar = c(1,1,1,1))
@@ -173,7 +173,8 @@ for (i in 1:9){
 ```{r}
 model_aug <- keras_model_sequential(input_shape = c(img_height, img_width, 3)) %>%
   layer_random_brightness(factor = 0.1) %>%
-  layer_random_contrast(factor = 0.2) %>%
+  layer_random_contrast(factor = 0.15) %>%
+  layer_rescaling(1./255) %>%
   layer_flatten() %>%
   layer_dense(4) %>%
   layer_activation(activation = 'softmax')
@@ -199,6 +200,7 @@ history_aug <- model_aug %>%
 ```
 
 ### Test model
+
 ```{r}
 evaluate(model_aug, test_tumor)
 ```
@@ -209,8 +211,23 @@ Data augmentation provides a boost in testing accuracy due to reduced overfittin
 ## Multi Layer Model
 Simplified version of the VGG-16 model architecture. 
 
+Explanation of what the different types of layers do:
+
+convolutional 2d layer: Extracts features from the image, which is specified by the number of filters. Padding adds pixels around the image to ensure that the input size and output size are matching. 
+
+max pooling layer: Takes the maximum value from each 2x2 grid of pixels. This reduces the dimensionality and makes the model more robust to small changes.
+
+dropout layer: Randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.
+
+dense layer: Typically at the end of model, connects each neuron to the output layer in order to make the final prediction. We used the softmax activation function since there are multiple classes.
+
+
 ```{r}
 model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
+  # Preprocessing layers
+  layer_random_brightness(factor = 0.1) %>%
+  layer_random_contrast(factor = 0.15) %>%
+  layer_rescaling(1./255) %>%
   
   # Convolutional layers
   layer_conv_2d(filters = 8, kernel_size = c(3,3), activation = 'relu', padding = 'same') %>%
