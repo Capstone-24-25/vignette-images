@@ -137,7 +137,6 @@ history_single_layer <- model_single_layer %>%
   fit(train_tumor, epochs = 20)
 ```
 
-(train_tumor, epochs = 20)
 
 
 ### Test model
@@ -201,6 +200,7 @@ history_aug <- model_aug %>%
 ```
 
 ### Test model
+
 ```{r}
 evaluate(model_aug, test_tumor)
 ```
