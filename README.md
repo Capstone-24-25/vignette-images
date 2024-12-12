@@ -32,6 +32,8 @@ In our directory can be found multiple folders, the data folder contains the dat
 
 - `vignette.html` the html rendered by the qmd file
 
+- `README.md` the introduction of the project and references
+
 
 # References
 
