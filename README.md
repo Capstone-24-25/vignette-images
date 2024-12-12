@@ -35,10 +35,16 @@ In our directory can be found multiple folders, the data folder contains the dat
 
 # References
 
+- Image Classification
+
+  - [What is Image Classification?](https://www.geeksforgeeks.org/what-is-image-classification/)
+  
 - CNN architecture
 
   - [Basic CNN Architecture: Explaining 5 Layers of Convolutional Neural Network](https://www.upgrad.com/blog/basic-cnn-architecture/)
 
+  - [VGG-16 | CNN model](https://www.geeksforgeeks.org/vgg-16-cnn-model/)
+  
 - Dataset
 
   - [Brain Tumor MRI Dataset](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)
