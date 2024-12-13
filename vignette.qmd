@@ -71,6 +71,12 @@ for (i in 1:32){
 }
 ```
 
+### Data Preprocessing
+
+We utilized a code which performs automated preprocessing and resizing of images stored in a nested directory structure using the “EBImage” and “fs” packages in R. The preprocess_image function processes a single image by converting it to grayscale, applying Gaussian blur, thresholding it to create a binary mask, and performing morphological operations (erosion and dilation) to reduce noise.
+
+It then identifies the largest connected component in the binary image, calculates its bounding box, crops the image to this region, and resizes it to the specified dimensions (default: 256x256 pixels). The resize_images_in_directory function applies this preprocessing to all images within a specified input directory, recursively traversing through subdirectories. For each subdirectory, it mirrors the structure in a specified output directory, processes all images within, and saves the resized images to the corresponding subdirectory in the output directory. This would make batch preprocessing large datasets of image really convenient since the directory structure is maintained.
+
 ### What is glioma?
 
 Glioma is a type of brain tumor that originates from glial cells in the spinal cord and brain, it is the most common cancerous brain tumor and makes up one-third of all brain tumors.
