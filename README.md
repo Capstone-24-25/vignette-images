@@ -28,6 +28,12 @@ In our directory can be found multiple folders, the data folder contains the dat
 
   - `drafts` contains drafts we create
   
+  - `main_work` contains the code of our project
+  
+  - `preprocessing` contains the code of preprocessing part
+  
+  - `resnet` contains the code of resnet model
+  
 - `vignette.qmd` a markdown file contain our main work
 
 - `vignette.html` the html rendered by the qmd file
