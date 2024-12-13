@@ -7,6 +7,11 @@ editor: visual
 
 # Image Classification with CNN
 
+Convolutional Neural Networks (CNNs) are deep learning models that extract features from images using convolutional layers, followed by pooling and fully connected layers for tasks like image classification. They excel in capturing spatial hierarchies and patterns, making them ideal for analyzing visual data.
+
+There are three types of CNN architecture which are the convolutional layers, pooling layers, and fully-connected (FC) layers. When these layers are stacked, a CNN architecture will be formed. In addition to these three layers, there is a more important parameter which is the activation function.
+
+
 ## Data
 
 Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse thus would require extensive scans to diagnose specific brain tumor types. This is where image classification comes in, specifically we will be applying a convolutional neural network model. A CNN model strengths lie in it's ability to identify patterns in images and extract features from data which is great for identifying specific brain tumors. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary tumors as well as no tumor cases. The data set we will be using contains 7023 MRI images all classified in one of the four classes. With the use of artificial intelligence it could lead to faster detections, personalized treatments, and improved planning.
@@ -210,9 +215,6 @@ Simplified version of the VGG-16 model architecture.
 
 Explanation of what the different types of layers do:
 
-convolutional 2d layer: Extracts features from the image, which is specified by the number of filters. Padding adds pixels around the image to ensure that the input size and output size are matching.
-
-max pooling layer: Takes the maximum value from each 2x2 grid of pixels. This reduces the dimensionality and makes the model more robust to small changes.
 
 dropout layer: Randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.
 
