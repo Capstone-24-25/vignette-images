@@ -96,6 +96,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="image-classification-with-cnn" class="level1">
 <h1>Image Classification with CNN</h1>
+<p>Convolutional Neural Networks (CNNs) are deep learning models that extract features from images using convolutional layers, followed by pooling and fully connected layers for tasks like image classification. They excel in capturing spatial hierarchies and patterns, making them ideal for analyzing visual data.</p>
+<p>There are three types of CNN architecture which are the convolutional layers, pooling layers, and fully-connected (FC) layers. When these layers are stacked, a CNN architecture will be formed. In addition to these three layers, there is a more important parameter which is the activation function.</p>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <p>Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse thus would require extensive scans to diagnose specific brain tumor types. This is where image classification comes in, specifically we will be applying a convolutional neural network model. A CNN model strengths lie in it’s ability to identify patterns in images and extract features from data which is great for identifying specific brain tumors. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary tumors as well as no tumor cases. The data set we will be using contains 7023 MRI images all classified in one of the four classes. With the use of artificial intelligence it could lead to faster detections, personalized treatments, and improved planning.</p>
@@ -189,6 +191,11 @@ The following objects are masked from 'package:tensorflow':
 <p><img src="vignette_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="data-preprocessing" class="level3">
+<h3 class="anchored" data-anchor-id="data-preprocessing">Data Preprocessing</h3>
+<p>We utilized a code (the specific code is in the script section of the repository with the name Preprocessing.R) which performs automated preprocessing and resizing of images stored in a nested directory structure using the “EBImage” and “fs” packages in R. The preprocess_image function processes a single image by converting it to grayscale, applying Gaussian blur, thresholding it to create a binary mask, and performing morphological operations (erosion and dilation) to reduce noise.</p>
+<p>It then identifies the largest connected component in the binary image, calculates its bounding box, crops the image to this region, and resizes it to the specified dimensions (default: 256x256 pixels). The resize_images_in_directory function applies this preprocessing to all images within a specified input directory, recursively traversing through subdirectories. For each subdirectory, it mirrors the structure in a specified output directory, processes all images within, and saves the resized images to the corresponding subdirectory in the output directory. This would make batch preprocessing large datasets of image really convenient since the directory structure is maintained.</p>
+</section>
 <section id="what-is-glioma" class="level3">
 <h3 class="anchored" data-anchor-id="what-is-glioma">What is glioma?</h3>
 <p>Glioma is a type of brain tumor that originates from glial cells in the spinal cord and brain, it is the most common cancerous brain tumor and makes up one-third of all brain tumors.</p>
@@ -232,7 +239,7 @@ The following objects are masked from 'package:tensorflow':
 </section>
 <section id="single-layer-model" class="level2">
 <h2 class="anchored" data-anchor-id="single-layer-model">Single Layer Model</h2>
-<p>First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model.</p>
+<p>First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model to make predictions.</p>
 <section id="define-model-architecture" class="level3">
 <h3 class="anchored" data-anchor-id="define-model-architecture">Define model architecture</h3>
 <div class="cell">
@@ -282,13 +289,13 @@ The following objects are masked from 'package:tensorflow':
 <pre><code>Epoch 1/20
 179/179 - 2s - 11ms/step - accuracy: 0.6217 - loss: 4.4001
 Epoch 2/20
-179/179 - 2s - 10ms/step - accuracy: 0.7356 - loss: 1.8544
+179/179 - 2s - 9ms/step - accuracy: 0.7356 - loss: 1.8544
 Epoch 3/20
 179/179 - 2s - 10ms/step - accuracy: 0.7495 - loss: 1.9915
 Epoch 4/20
 179/179 - 2s - 10ms/step - accuracy: 0.8097 - loss: 1.2745
 Epoch 5/20
-179/179 - 2s - 10ms/step - accuracy: 0.8079 - loss: 1.4008
+179/179 - 2s - 9ms/step - accuracy: 0.8079 - loss: 1.4008
 Epoch 6/20
 179/179 - 2s - 10ms/step - accuracy: 0.8718 - loss: 0.6882
 Epoch 7/20
@@ -310,7 +317,7 @@ Epoch 14/20
 Epoch 15/20
 179/179 - 2s - 10ms/step - accuracy: 0.8983 - loss: 0.7506
 Epoch 16/20
-179/179 - 2s - 10ms/step - accuracy: 0.9156 - loss: 0.5328
+179/179 - 2s - 9ms/step - accuracy: 0.9156 - loss: 0.5328
 Epoch 17/20
 179/179 - 2s - 10ms/step - accuracy: 0.9293 - loss: 0.4336
 Epoch 18/20
@@ -321,7 +328,6 @@ Epoch 20/20
 179/179 - 2s - 10ms/step - accuracy: 0.9027 - loss: 0.7153</code></pre>
 </div>
 </div>
-<p>(train_tumor, epochs = 20)</p>
 </section>
 <section id="test-model" class="level3">
 <h3 class="anchored" data-anchor-id="test-model">Test model</h3>
@@ -415,45 +421,45 @@ $loss
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-179/179 - 3s - 18ms/step - accuracy: 0.5840 - loss: 4.6593
+179/179 - 3s - 17ms/step - accuracy: 0.5840 - loss: 4.6593
 Epoch 2/20
 179/179 - 3s - 16ms/step - accuracy: 0.6908 - loss: 2.2462
 Epoch 3/20
-179/179 - 3s - 16ms/step - accuracy: 0.7409 - loss: 2.0748
+179/179 - 3s - 17ms/step - accuracy: 0.7409 - loss: 2.0748
 Epoch 4/20
-179/179 - 3s - 16ms/step - accuracy: 0.7644 - loss: 1.6070
+179/179 - 3s - 19ms/step - accuracy: 0.7644 - loss: 1.6070
 Epoch 5/20
-179/179 - 3s - 16ms/step - accuracy: 0.7826 - loss: 1.5164
+179/179 - 3s - 18ms/step - accuracy: 0.7826 - loss: 1.5164
 Epoch 6/20
-179/179 - 3s - 16ms/step - accuracy: 0.7729 - loss: 2.1454
+179/179 - 3s - 17ms/step - accuracy: 0.7729 - loss: 2.1454
 Epoch 7/20
-179/179 - 3s - 16ms/step - accuracy: 0.8283 - loss: 1.1941
+179/179 - 4s - 20ms/step - accuracy: 0.8283 - loss: 1.1941
 Epoch 8/20
-179/179 - 3s - 16ms/step - accuracy: 0.8136 - loss: 1.3794
+179/179 - 3s - 17ms/step - accuracy: 0.8136 - loss: 1.3794
 Epoch 9/20
-179/179 - 3s - 16ms/step - accuracy: 0.8146 - loss: 1.6076
+179/179 - 3s - 17ms/step - accuracy: 0.8146 - loss: 1.6076
 Epoch 10/20
-179/179 - 3s - 16ms/step - accuracy: 0.8736 - loss: 0.7881
+179/179 - 3s - 17ms/step - accuracy: 0.8736 - loss: 0.7881
 Epoch 11/20
-179/179 - 3s - 16ms/step - accuracy: 0.8598 - loss: 1.0170
+179/179 - 3s - 17ms/step - accuracy: 0.8598 - loss: 1.0170
 Epoch 12/20
-179/179 - 3s - 16ms/step - accuracy: 0.8617 - loss: 1.0657
+179/179 - 3s - 17ms/step - accuracy: 0.8617 - loss: 1.0657
 Epoch 13/20
-179/179 - 3s - 16ms/step - accuracy: 0.8930 - loss: 0.6121
+179/179 - 3s - 17ms/step - accuracy: 0.8930 - loss: 0.6121
 Epoch 14/20
-179/179 - 3s - 16ms/step - accuracy: 0.8412 - loss: 1.2327
+179/179 - 3s - 17ms/step - accuracy: 0.8412 - loss: 1.2327
 Epoch 15/20
-179/179 - 3s - 16ms/step - accuracy: 0.8841 - loss: 0.8156
+179/179 - 3s - 17ms/step - accuracy: 0.8841 - loss: 0.8156
 Epoch 16/20
-179/179 - 3s - 16ms/step - accuracy: 0.8703 - loss: 1.0433
+179/179 - 3s - 17ms/step - accuracy: 0.8703 - loss: 1.0433
 Epoch 17/20
-179/179 - 3s - 16ms/step - accuracy: 0.8971 - loss: 0.6589
+179/179 - 3s - 17ms/step - accuracy: 0.8971 - loss: 0.6589
 Epoch 18/20
-179/179 - 3s - 16ms/step - accuracy: 0.8775 - loss: 0.9452
+179/179 - 3s - 17ms/step - accuracy: 0.8775 - loss: 0.9452
 Epoch 19/20
-179/179 - 3s - 16ms/step - accuracy: 0.8866 - loss: 0.8810
+179/179 - 3s - 17ms/step - accuracy: 0.8866 - loss: 0.8810
 Epoch 20/20
-179/179 - 3s - 16ms/step - accuracy: 0.8881 - loss: 0.9086</code></pre>
+179/179 - 3s - 17ms/step - accuracy: 0.8881 - loss: 0.9086</code></pre>
 </div>
 </div>
 </section>
@@ -462,7 +468,7 @@ Epoch 20/20
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_aug, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 0s - 8ms/step - accuracy: 0.8589 - loss: 1.8198</code></pre>
+<pre><code>41/41 - 0s - 9ms/step - accuracy: 0.8589 - loss: 1.8198</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
@@ -472,17 +478,12 @@ $loss
 [1] 1.819833</code></pre>
 </div>
 </div>
-<p>Data augmentation provides a boost in testing accuracy due to reduced overfitting.</p>
+<p>Data augmentation provides a slight boost in testing accuracy due to reduced overfitting, which allows the model to better generalize to new, unseen data.</p>
 </section>
 </section>
-<section id="multi-layer-model" class="level2">
-<h2 class="anchored" data-anchor-id="multi-layer-model">Multi Layer Model</h2>
-<p>Simplified version of the VGG-16 model architecture.</p>
-<p>Explanation of what the different types of layers do:</p>
-<p>convolutional 2d layer: Extracts features from the image, which is specified by the number of filters. Padding adds pixels around the image to ensure that the input size and output size are matching.</p>
-<p>max pooling layer: Takes the maximum value from each 2x2 grid of pixels. This reduces the dimensionality and makes the model more robust to small changes.</p>
-<p>dropout layer: Randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.</p>
-<p>dense layer: Typically at the end of model, connects each neuron to the output layer in order to make the final prediction. We used the softmax activation function since there are multiple classes.</p>
+<section id="multi-layer-cnn-model" class="level2">
+<h2 class="anchored" data-anchor-id="multi-layer-cnn-model">Multi Layer CNN Model</h2>
+<p>We used a simplified version of the VGG-16 model architecture.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model_vgg16 <span class="ot">&lt;-</span> <span class="fu">keras_model_sequential</span>(<span class="at">input_shape =</span> <span class="fu">c</span>(<span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Preprocessing layers</span></span>
@@ -559,46 +560,50 @@ $loss
  Non-trainable params: 0 (0.00 B)</code></pre>
 </div>
 </div>
-</section>
-<section id="compile-model-2" class="level2">
-<h2 class="anchored" data-anchor-id="compile-model-2">Compile model</h2>
+<p>Here is a brief explanation of what the different types of layers do:</p>
+<p>Convolutional layers are the core building blocks of a Convolutional Neural Network (CNN). They are responsible for detecting patterns or features in input data, such as edges, textures, shapes, or more abstract details, depending on the layer’s depth. They take in an input image or feature map (e.g., a 256×256×3 image with height, width, and color channels for RGB). Then the kernel, a small matrix (3×3 in this case) slides over the input, performing an operation called a convolution. Each kernel is designed to detect specific features in the image. The convolution operation produces a feature map, showing where certain features are detected in the input. If the input is an image and the filter detects edges, the feature map highlights the edges.</p>
+<p>Pooling layers are used to reduce the spatial dimensions (height and width) of feature maps while retaining their most important information. This makes the model more computationally efficient and helps prevent overfitting. Pooling divides the input feature map into non-overlapping or overlapping regions and reduces each region to a single value.</p>
+<p>The dropout layer randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.</p>
+<p>Fully connected layers are used in the final stages of a CNN to perform classification or regression tasks. In these layers, every neuron is connected to every neuron in the previous layer. Each neuron in a fully connected layer receives inputs from all neurons of the previous layer, with each connection having a specific weight and each neuron incorporating a bias. The input to each neuron is a weighted sum of these inputs plus a bias. The weighted sum is then processed through a non-linear activation function, such as ReLU, Sigmoid, or Tanh. This step introduces non-linearity, enabling the network to learn complex functions.</p>
+<section id="compile-model-2" class="level3">
+<h3 class="anchored" data-anchor-id="compile-model-2">Compile model</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>model_vgg16 <span class="sc">%&gt;%</span> <span class="fu">compile</span>(<span class="at">loss =</span> <span class="st">'crossentropy'</span>,</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">optimizer =</span> <span class="st">'adam'</span>,</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metrics =</span> <span class="st">'accuracy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="train-model-2" class="level2">
-<h2 class="anchored" data-anchor-id="train-model-2">Train model</h2>
+<section id="train-model-2" class="level3">
+<h3 class="anchored" data-anchor-id="train-model-2">Train model</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>history_vgg16 <span class="ot">&lt;-</span> model_vgg16 <span class="sc">%&gt;%</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/10
-179/179 - 43s - 237ms/step - accuracy: 0.7010 - loss: 0.7064
+179/179 - 46s - 255ms/step - accuracy: 0.7010 - loss: 0.7064
 Epoch 2/10
-179/179 - 41s - 232ms/step - accuracy: 0.8206 - loss: 0.4610
+179/179 - 44s - 248ms/step - accuracy: 0.8206 - loss: 0.4610
 Epoch 3/10
-179/179 - 42s - 232ms/step - accuracy: 0.8713 - loss: 0.3300
+179/179 - 45s - 250ms/step - accuracy: 0.8713 - loss: 0.3300
 Epoch 4/10
-179/179 - 42s - 235ms/step - accuracy: 0.9060 - loss: 0.2552
+179/179 - 44s - 248ms/step - accuracy: 0.9060 - loss: 0.2552
 Epoch 5/10
-179/179 - 43s - 239ms/step - accuracy: 0.9389 - loss: 0.1633
+179/179 - 44s - 248ms/step - accuracy: 0.9389 - loss: 0.1633
 Epoch 6/10
-179/179 - 42s - 235ms/step - accuracy: 0.9510 - loss: 0.1264
+179/179 - 44s - 244ms/step - accuracy: 0.9510 - loss: 0.1264
 Epoch 7/10
-179/179 - 42s - 235ms/step - accuracy: 0.9666 - loss: 0.1005
+179/179 - 42s - 236ms/step - accuracy: 0.9666 - loss: 0.1005
 Epoch 8/10
-179/179 - 42s - 237ms/step - accuracy: 0.9706 - loss: 0.0912
+179/179 - 42s - 235ms/step - accuracy: 0.9706 - loss: 0.0912
 Epoch 9/10
-179/179 - 42s - 237ms/step - accuracy: 0.9723 - loss: 0.0716
+179/179 - 42s - 234ms/step - accuracy: 0.9723 - loss: 0.0716
 Epoch 10/10
-179/179 - 42s - 232ms/step - accuracy: 0.9827 - loss: 0.0485</code></pre>
+179/179 - 43s - 238ms/step - accuracy: 0.9827 - loss: 0.0485</code></pre>
 </div>
 </div>
 </section>
-<section id="test-model-2" class="level2">
-<h2 class="anchored" data-anchor-id="test-model-2">Test model</h2>
+<section id="test-model-2" class="level3">
+<h3 class="anchored" data-anchor-id="test-model-2">Test model</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_vgg16, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -612,6 +617,8 @@ $loss
 [1] 0.1587</code></pre>
 </div>
 </div>
+<p>This model is able to converge to a higher accuracy in a fewer amount of epochs, and the testing accuracy is improved drasticallly.</p>
+</section>
 </section>
 </section>
 

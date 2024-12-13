@@ -116,7 +116,7 @@ display_image(images[30,,,])
 
 ## Single Layer Model
 
-First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model.
+First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model to make predictions.
 
 ### Define model architecture
 
@@ -213,18 +213,11 @@ history_aug <- model_aug %>%
 evaluate(model_aug, test_tumor)
 ```
 
-Data augmentation provides a boost in testing accuracy due to reduced overfitting.
+Data augmentation provides a slight boost in testing accuracy due to reduced overfitting, which allows the model to better generalize to new, unseen data.
 
-## Multi Layer Model
+## Multi Layer CNN Model
 
-Simplified version of the VGG-16 model architecture.
-
-Explanation of what the different types of layers do:
-
-
-dropout layer: Randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.
-
-dense layer: Typically at the end of model, connects each neuron to the output layer in order to make the final prediction. We used the softmax activation function since there are multiple classes.
+We used a simplified version of the VGG-16 model architecture.
 
 ```{r}
 model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
@@ -258,6 +251,16 @@ model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
 summary(model_vgg16)
 ```
 
+Here is a brief explanation of what the different types of layers do:
+
+Convolutional layers are the core building blocks of a Convolutional Neural Network (CNN). They are responsible for detecting patterns or features in input data, such as edges, textures, shapes, or more abstract details, depending on the layer's depth. They take in an input image or feature map (e.g., a 256×256×3 image with height, width, and color channels for RGB). Then the kernel, a small matrix (3×3 in this case) slides over the input, performing an operation called a convolution. Each kernel is designed to detect specific features in the image. The convolution operation produces a feature map, showing where certain features are detected in the input. If the input is an image and the filter detects edges, the feature map highlights the edges.
+
+Pooling layers are used to reduce the spatial dimensions (height and width) of feature maps while retaining their most important information. This makes the model more computationally efficient and helps prevent overfitting. Pooling divides the input feature map into non-overlapping or overlapping regions and reduces each region to a single value.
+
+The dropout layer randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.
+
+Fully connected layers are used in the final stages of a CNN to perform classification or regression tasks. In these layers, every neuron is connected to every neuron in the previous layer. Each neuron in a fully connected layer receives inputs from all neurons of the previous layer, with each connection having a specific weight and each neuron incorporating a bias. The input to each neuron is a weighted sum of these inputs plus a bias. The weighted sum is then processed through a non-linear activation function, such as ReLU, Sigmoid, or Tanh. This step introduces non-linearity, enabling the network to learn complex functions.
+
 ### Compile model
 
 ```{r}
@@ -278,3 +281,5 @@ history_vgg16 <- model_vgg16 %>%
 ```{r}
 evaluate(model_vgg16, test_tumor)
 ```
+
+This model is able to converge to a higher accuracy in a fewer amount of epochs, and the testing accuracy is improved drasticallly. 
