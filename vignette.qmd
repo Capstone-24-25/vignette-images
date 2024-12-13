@@ -256,7 +256,7 @@ model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
 summary(model_vgg16)
 ```
 
-## Compile model
+### Compile model
 
 ```{r}
 model_vgg16 %>% compile(loss = 'crossentropy',
@@ -264,14 +264,14 @@ model_vgg16 %>% compile(loss = 'crossentropy',
                   metrics = 'accuracy')
 ```
 
-## Train model
+### Train model
 
 ```{r}
 history_vgg16 <- model_vgg16 %>%
   fit(train_tumor, epochs = 10)
 ```
 
-## Test model
+### Test model
 
 ```{r}
 evaluate(model_vgg16, test_tumor)
