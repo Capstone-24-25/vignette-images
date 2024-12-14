@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="David Pan, James San, Peter Xiong, Amy Ji">
 
 <title>vignette-images</title>
 <style>
@@ -86,6 +87,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>David Pan, James San, Peter Xiong, Amy Ji </p>
+          </div>
+  </div>
     
   
     
@@ -291,41 +298,41 @@ The following objects are masked from 'package:tensorflow':
 Epoch 2/20
 179/179 - 2s - 9ms/step - accuracy: 0.7356 - loss: 1.8544
 Epoch 3/20
-179/179 - 2s - 10ms/step - accuracy: 0.7495 - loss: 1.9915
+179/179 - 2s - 9ms/step - accuracy: 0.7495 - loss: 1.9915
 Epoch 4/20
-179/179 - 2s - 10ms/step - accuracy: 0.8097 - loss: 1.2745
+179/179 - 2s - 9ms/step - accuracy: 0.8097 - loss: 1.2745
 Epoch 5/20
 179/179 - 2s - 9ms/step - accuracy: 0.8079 - loss: 1.4008
 Epoch 6/20
-179/179 - 2s - 10ms/step - accuracy: 0.8718 - loss: 0.6882
+179/179 - 2s - 9ms/step - accuracy: 0.8718 - loss: 0.6882
 Epoch 7/20
-179/179 - 2s - 10ms/step - accuracy: 0.8417 - loss: 1.0120
+179/179 - 2s - 9ms/step - accuracy: 0.8417 - loss: 1.0120
 Epoch 8/20
-179/179 - 2s - 10ms/step - accuracy: 0.8382 - loss: 1.1551
+179/179 - 2s - 9ms/step - accuracy: 0.8382 - loss: 1.1551
 Epoch 9/20
-179/179 - 2s - 10ms/step - accuracy: 0.8445 - loss: 1.2285
+179/179 - 2s - 9ms/step - accuracy: 0.8445 - loss: 1.2285
 Epoch 10/20
-179/179 - 2s - 10ms/step - accuracy: 0.8876 - loss: 0.7823
+179/179 - 2s - 9ms/step - accuracy: 0.8876 - loss: 0.7823
 Epoch 11/20
-179/179 - 2s - 10ms/step - accuracy: 0.8894 - loss: 0.7178
+179/179 - 2s - 9ms/step - accuracy: 0.8894 - loss: 0.7178
 Epoch 12/20
-179/179 - 2s - 10ms/step - accuracy: 0.8817 - loss: 0.8498
+179/179 - 2s - 9ms/step - accuracy: 0.8817 - loss: 0.8498
 Epoch 13/20
-179/179 - 2s - 10ms/step - accuracy: 0.8328 - loss: 1.5485
+179/179 - 2s - 9ms/step - accuracy: 0.8328 - loss: 1.5485
 Epoch 14/20
-179/179 - 2s - 10ms/step - accuracy: 0.8855 - loss: 0.9802
+179/179 - 2s - 8ms/step - accuracy: 0.8855 - loss: 0.9802
 Epoch 15/20
-179/179 - 2s - 10ms/step - accuracy: 0.8983 - loss: 0.7506
+179/179 - 2s - 9ms/step - accuracy: 0.8983 - loss: 0.7506
 Epoch 16/20
 179/179 - 2s - 9ms/step - accuracy: 0.9156 - loss: 0.5328
 Epoch 17/20
-179/179 - 2s - 10ms/step - accuracy: 0.9293 - loss: 0.4336
+179/179 - 2s - 9ms/step - accuracy: 0.9293 - loss: 0.4336
 Epoch 18/20
-179/179 - 2s - 10ms/step - accuracy: 0.9398 - loss: 0.3182
+179/179 - 2s - 9ms/step - accuracy: 0.9398 - loss: 0.3182
 Epoch 19/20
-179/179 - 2s - 10ms/step - accuracy: 0.9098 - loss: 0.6305
+179/179 - 2s - 9ms/step - accuracy: 0.9098 - loss: 0.6305
 Epoch 20/20
-179/179 - 2s - 10ms/step - accuracy: 0.9027 - loss: 0.7153</code></pre>
+179/179 - 2s - 9ms/step - accuracy: 0.9027 - loss: 0.7153</code></pre>
 </div>
 </div>
 </section>
@@ -334,7 +341,7 @@ Epoch 20/20
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_single_layer, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 0s - 9ms/step - accuracy: 0.8246 - loss: 2.2198</code></pre>
+<pre><code>41/41 - 0s - 7ms/step - accuracy: 0.8246 - loss: 2.2198</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
@@ -421,45 +428,45 @@ $loss
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/20
-179/179 - 3s - 17ms/step - accuracy: 0.5840 - loss: 4.6593
+179/179 - 3s - 15ms/step - accuracy: 0.5840 - loss: 4.6593
 Epoch 2/20
-179/179 - 3s - 16ms/step - accuracy: 0.6908 - loss: 2.2462
+179/179 - 2s - 14ms/step - accuracy: 0.6908 - loss: 2.2462
 Epoch 3/20
-179/179 - 3s - 17ms/step - accuracy: 0.7409 - loss: 2.0748
+179/179 - 2s - 14ms/step - accuracy: 0.7409 - loss: 2.0748
 Epoch 4/20
-179/179 - 3s - 19ms/step - accuracy: 0.7644 - loss: 1.6070
+179/179 - 3s - 14ms/step - accuracy: 0.7644 - loss: 1.6070
 Epoch 5/20
-179/179 - 3s - 18ms/step - accuracy: 0.7826 - loss: 1.5164
+179/179 - 2s - 13ms/step - accuracy: 0.7826 - loss: 1.5164
 Epoch 6/20
-179/179 - 3s - 17ms/step - accuracy: 0.7729 - loss: 2.1454
+179/179 - 2s - 14ms/step - accuracy: 0.7729 - loss: 2.1454
 Epoch 7/20
-179/179 - 4s - 20ms/step - accuracy: 0.8283 - loss: 1.1941
+179/179 - 2s - 14ms/step - accuracy: 0.8283 - loss: 1.1941
 Epoch 8/20
-179/179 - 3s - 17ms/step - accuracy: 0.8136 - loss: 1.3794
+179/179 - 2s - 14ms/step - accuracy: 0.8136 - loss: 1.3794
 Epoch 9/20
-179/179 - 3s - 17ms/step - accuracy: 0.8146 - loss: 1.6076
+179/179 - 3s - 14ms/step - accuracy: 0.8146 - loss: 1.6076
 Epoch 10/20
-179/179 - 3s - 17ms/step - accuracy: 0.8736 - loss: 0.7881
+179/179 - 2s - 14ms/step - accuracy: 0.8736 - loss: 0.7881
 Epoch 11/20
-179/179 - 3s - 17ms/step - accuracy: 0.8598 - loss: 1.0170
+179/179 - 2s - 14ms/step - accuracy: 0.8598 - loss: 1.0170
 Epoch 12/20
-179/179 - 3s - 17ms/step - accuracy: 0.8617 - loss: 1.0657
+179/179 - 3s - 14ms/step - accuracy: 0.8617 - loss: 1.0657
 Epoch 13/20
-179/179 - 3s - 17ms/step - accuracy: 0.8930 - loss: 0.6121
+179/179 - 2s - 14ms/step - accuracy: 0.8930 - loss: 0.6121
 Epoch 14/20
-179/179 - 3s - 17ms/step - accuracy: 0.8412 - loss: 1.2327
+179/179 - 3s - 14ms/step - accuracy: 0.8412 - loss: 1.2327
 Epoch 15/20
-179/179 - 3s - 17ms/step - accuracy: 0.8841 - loss: 0.8156
+179/179 - 3s - 14ms/step - accuracy: 0.8841 - loss: 0.8156
 Epoch 16/20
-179/179 - 3s - 17ms/step - accuracy: 0.8703 - loss: 1.0433
+179/179 - 3s - 14ms/step - accuracy: 0.8703 - loss: 1.0433
 Epoch 17/20
-179/179 - 3s - 17ms/step - accuracy: 0.8971 - loss: 0.6589
+179/179 - 3s - 14ms/step - accuracy: 0.8971 - loss: 0.6589
 Epoch 18/20
-179/179 - 3s - 17ms/step - accuracy: 0.8775 - loss: 0.9452
+179/179 - 3s - 14ms/step - accuracy: 0.8775 - loss: 0.9452
 Epoch 19/20
-179/179 - 3s - 17ms/step - accuracy: 0.8866 - loss: 0.8810
+179/179 - 3s - 14ms/step - accuracy: 0.8866 - loss: 0.8810
 Epoch 20/20
-179/179 - 3s - 17ms/step - accuracy: 0.8881 - loss: 0.9086</code></pre>
+179/179 - 2s - 14ms/step - accuracy: 0.8881 - loss: 0.9086</code></pre>
 </div>
 </div>
 </section>
@@ -468,7 +475,7 @@ Epoch 20/20
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_aug, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 0s - 9ms/step - accuracy: 0.8589 - loss: 1.8198</code></pre>
+<pre><code>41/41 - 0s - 7ms/step - accuracy: 0.8589 - loss: 1.8198</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
@@ -580,25 +587,25 @@ $loss
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(train_tumor, <span class="at">epochs =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/10
-179/179 - 46s - 255ms/step - accuracy: 0.7010 - loss: 0.7064
+179/179 - 36s - 202ms/step - accuracy: 0.7010 - loss: 0.7064
 Epoch 2/10
-179/179 - 44s - 248ms/step - accuracy: 0.8206 - loss: 0.4610
+179/179 - 35s - 197ms/step - accuracy: 0.8206 - loss: 0.4610
 Epoch 3/10
-179/179 - 45s - 250ms/step - accuracy: 0.8713 - loss: 0.3300
+179/179 - 35s - 197ms/step - accuracy: 0.8713 - loss: 0.3300
 Epoch 4/10
-179/179 - 44s - 248ms/step - accuracy: 0.9060 - loss: 0.2552
+179/179 - 36s - 202ms/step - accuracy: 0.9060 - loss: 0.2552
 Epoch 5/10
-179/179 - 44s - 248ms/step - accuracy: 0.9389 - loss: 0.1633
+179/179 - 36s - 198ms/step - accuracy: 0.9389 - loss: 0.1633
 Epoch 6/10
-179/179 - 44s - 244ms/step - accuracy: 0.9510 - loss: 0.1264
+179/179 - 37s - 207ms/step - accuracy: 0.9510 - loss: 0.1264
 Epoch 7/10
-179/179 - 42s - 236ms/step - accuracy: 0.9666 - loss: 0.1005
+179/179 - 37s - 206ms/step - accuracy: 0.9666 - loss: 0.1005
 Epoch 8/10
-179/179 - 42s - 235ms/step - accuracy: 0.9706 - loss: 0.0912
+179/179 - 37s - 207ms/step - accuracy: 0.9706 - loss: 0.0912
 Epoch 9/10
-179/179 - 42s - 234ms/step - accuracy: 0.9723 - loss: 0.0716
+179/179 - 37s - 206ms/step - accuracy: 0.9723 - loss: 0.0716
 Epoch 10/10
-179/179 - 43s - 238ms/step - accuracy: 0.9827 - loss: 0.0485</code></pre>
+179/179 - 36s - 202ms/step - accuracy: 0.9827 - loss: 0.0485</code></pre>
 </div>
 </div>
 </section>
@@ -607,7 +614,7 @@ Epoch 10/10
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(model_vgg16, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>41/41 - 3s - 65ms/step - accuracy: 0.9542 - loss: 0.1587</code></pre>
+<pre><code>41/41 - 2s - 54ms/step - accuracy: 0.9542 - loss: 0.1587</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$accuracy
@@ -617,8 +624,388 @@ $loss
 [1] 0.1587</code></pre>
 </div>
 </div>
-<p>This model is able to converge to a higher accuracy in a fewer amount of epochs, and the testing accuracy is improved drasticallly.</p>
+<p>This model is able to converge to a higher accuracy in a fewer amount of epochs, and the testing accuracy is improved drastically.</p>
 </section>
+</section>
+<section id="resnet-model" class="level2">
+<h2 class="anchored" data-anchor-id="resnet-model">ResNet Model</h2>
+<p>Simplified version of the ResNet Model.</p>
+<p>Type of CNN model that introduces residual learning to deal with the issue of vanishing and exploding gradients that other models face in very deep networks.</p>
+<p>The ResNet model utilizes skip connections, also known as residual connections, which bypasses one or more layers and directly connects the input back with the output of the main path which undergoes the normal sequence through all the convolutional blocks. This way the residuals from the input are preserved and can flow through the network while remaining significant.</p>
+<p>We first introduce the residual block which defines the structure of each block in the network, we have the shortcut which is essentially the input. The if statement deals with dimensional errors that occur after down sampling, the main path and shortcut paths may not align dimensionally so we apply a 1x1 convolution to the shortcut dimensions. Afterwards we create our convolution blocks and normalization and non-linearity layers. At the end we combine the shortcut, input, with the main path output to create a final output.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>residual_block <span class="ot">&lt;-</span> <span class="cf">function</span>(input, filters, <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  shortcut <span class="ot">&lt;-</span> input</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (input<span class="sc">$</span>shape[[<span class="dv">3</span>]] <span class="sc">!=</span> filters <span class="sc">||</span> <span class="sc">!</span><span class="fu">all</span>(strides <span class="sc">==</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))) {</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    shortcut <span class="ot">&lt;-</span> <span class="fu">layer_conv_2d</span>(</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">filters =</span> filters,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">strides =</span> strides,</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">padding =</span> <span class="st">"same"</span>,</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">activation =</span> <span class="cn">NULL</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    )(input)</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    shortcut <span class="ot">&lt;-</span> <span class="fu">layer_batch_normalization</span>()(shortcut)</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First convolution</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_conv_2d</span>(</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">filters =</span> filters,</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">strides =</span> strides,</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="st">"same"</span>,</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">activation =</span> <span class="cn">NULL</span></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>  )(input)</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_batch_normalization</span>()(x)</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_activation_relu</span>()(x)</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Second convolution</span></span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_conv_2d</span>(</span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">filters =</span> filters,</span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="st">"same"</span>,</span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">activation =</span> <span class="cn">NULL</span></span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>  )(x)</span>
+<span id="cb42-35"><a href="#cb42-35" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_batch_normalization</span>()(x)</span>
+<span id="cb42-36"><a href="#cb42-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add shortcut and output</span></span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_add</span>(<span class="fu">list</span>(shortcut, x))</span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">layer_activation_relu</span>()(x)</span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the ResNet Model</span></span>
+<span id="cb42-45"><a href="#cb42-45" aria-hidden="true" tabindex="-1"></a>input_layer <span class="ot">&lt;-</span> <span class="fu">layer_input</span>(<span class="at">shape =</span> <span class="fu">c</span>(img_height, img_width, <span class="dv">3</span>))</span>
+<span id="cb42-46"><a href="#cb42-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-47"><a href="#cb42-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial Convolution and Pooling</span></span>
+<span id="cb42-48"><a href="#cb42-48" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">layer_conv_2d</span>(<span class="at">filters =</span> <span class="dv">8</span>, <span class="at">kernel_size =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">7</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">padding =</span> <span class="st">"same"</span>)(input_layer)</span>
+<span id="cb42-49"><a href="#cb42-49" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">layer_batch_normalization</span>()(x)</span>
+<span id="cb42-50"><a href="#cb42-50" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">layer_activation_relu</span>()(x)</span>
+<span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">layer_max_pooling_2d</span>(<span class="at">pool_size =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>), <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">padding =</span> <span class="st">"same"</span>)(x)</span>
+<span id="cb42-52"><a href="#cb42-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-53"><a href="#cb42-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Residual Blocks</span></span>
+<span id="cb42-54"><a href="#cb42-54" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">8</span>)</span>
+<span id="cb42-55"><a href="#cb42-55" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">8</span>)</span>
+<span id="cb42-56"><a href="#cb42-56" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">16</span>, <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))  <span class="co"># Downsample</span></span>
+<span id="cb42-57"><a href="#cb42-57" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">16</span>)</span>
+<span id="cb42-58"><a href="#cb42-58" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">32</span>, <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))  <span class="co"># Downsample</span></span>
+<span id="cb42-59"><a href="#cb42-59" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">32</span>)</span>
+<span id="cb42-60"><a href="#cb42-60" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">64</span>, <span class="at">strides =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))  <span class="co"># Downsample</span></span>
+<span id="cb42-61"><a href="#cb42-61" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">residual_block</span>(x, <span class="at">filters =</span> <span class="dv">64</span>)</span>
+<span id="cb42-62"><a href="#cb42-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-63"><a href="#cb42-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-64"><a href="#cb42-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Fully Connected Layers</span></span>
+<span id="cb42-65"><a href="#cb42-65" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">layer_global_average_pooling_2d</span>()(x)</span>
+<span id="cb42-66"><a href="#cb42-66" aria-hidden="true" tabindex="-1"></a>output_layer <span class="ot">&lt;-</span> <span class="fu">layer_dense</span>(<span class="at">units =</span> <span class="dv">4</span>, <span class="at">activation =</span> <span class="st">"softmax"</span>)(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once we have the residual blocks created we define the model, apply a initial convolution and down sample. This way we take the input and begin with a larger filter, 7x7, which is able to capture larger shapes and patterns and allowing us to start with a larger receptive field to get the broader features early on, our normal filter size would be 3x3. The down sampling reduces the spatial dimensions of the feature map to increase field of view that layers process. As a result, higher level features are emphasized while the lower-level ones are essentially phased out. Afterwards we call our residual blocks that we had defined above, 8 in total, we increase the filter number every time we down sample to compensate for the decreased spatial dimensions and also the deeper layers have more filters to get more abstract features which is critical for that stage.</p>
+<p>We have a total of 61 layers.</p>
+</section>
+<section id="compile-resnet-model" class="level2">
+<h2 class="anchored" data-anchor-id="compile-resnet-model">Compile ResNet Model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile the Model</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>resnet61_model <span class="ot">&lt;-</span> <span class="fu">keras_model</span>(<span class="at">inputs =</span> input_layer, <span class="at">outputs =</span> output_layer)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Model Summary</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resnet61_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "functional_29"
+┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━┓
+┃ Layer (type)       ┃ Output Shape     ┃    Param # ┃ Connected to    ┃ Trai… ┃
+┡━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━┩
+│ input_layer_4      │ (None, 256, 256, │          0 │ -               │   -   │
+│ (InputLayer)       │ 3)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_5 (Conv2D)  │ (None, 128, 128, │      1,184 │ input_layer_4[… │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 128, 128, │         32 │ conv2d_5[0][0]  │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu (ReLU)       │ (None, 128, 128, │          0 │ batch_normaliz… │   -   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ max_pooling2d_5    │ (None, 64, 64,   │          0 │ re_lu[0][0]     │   -   │
+│ (MaxPooling2D)     │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_7 (Conv2D)  │ (None, 64, 64,   │        584 │ max_pooling2d_… │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 64, 64,   │         32 │ conv2d_7[0][0]  │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_1 (ReLU)     │ (None, 64, 64,   │          0 │ batch_normaliz… │   -   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_6 (Conv2D)  │ (None, 64, 64,   │         72 │ max_pooling2d_… │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_8 (Conv2D)  │ (None, 64, 64,   │        584 │ re_lu_1[0][0]   │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 64, 64,   │         32 │ conv2d_6[0][0]  │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 64, 64,   │         32 │ conv2d_8[0][0]  │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add (Add)          │ (None, 64, 64,   │          0 │ batch_normaliz… │   -   │
+│                    │ 8)               │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_2 (ReLU)     │ (None, 64, 64,   │          0 │ add[0][0]       │   -   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_10 (Conv2D) │ (None, 64, 64,   │        584 │ re_lu_2[0][0]   │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 64, 64,   │         32 │ conv2d_10[0][0] │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_3 (ReLU)     │ (None, 64, 64,   │          0 │ batch_normaliz… │   -   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_9 (Conv2D)  │ (None, 64, 64,   │         72 │ re_lu_2[0][0]   │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_11 (Conv2D) │ (None, 64, 64,   │        584 │ re_lu_3[0][0]   │   Y   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 64, 64,   │         32 │ conv2d_9[0][0]  │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 64, 64,   │         32 │ conv2d_11[0][0] │   Y   │
+│ (BatchNormalizati… │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_1 (Add)        │ (None, 64, 64,   │          0 │ batch_normaliz… │   -   │
+│                    │ 8)               │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_4 (ReLU)     │ (None, 64, 64,   │          0 │ add_1[0][0]     │   -   │
+│                    │ 8)               │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_13 (Conv2D) │ (None, 32, 32,   │      1,168 │ re_lu_4[0][0]   │   Y   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 32, 32,   │         64 │ conv2d_13[0][0] │   Y   │
+│ (BatchNormalizati… │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_5 (ReLU)     │ (None, 32, 32,   │          0 │ batch_normaliz… │   -   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_12 (Conv2D) │ (None, 32, 32,   │        144 │ re_lu_4[0][0]   │   Y   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_14 (Conv2D) │ (None, 32, 32,   │      2,320 │ re_lu_5[0][0]   │   Y   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 32, 32,   │         64 │ conv2d_12[0][0] │   Y   │
+│ (BatchNormalizati… │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 32, 32,   │         64 │ conv2d_14[0][0] │   Y   │
+│ (BatchNormalizati… │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_2 (Add)        │ (None, 32, 32,   │          0 │ batch_normaliz… │   -   │
+│                    │ 16)              │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_6 (ReLU)     │ (None, 32, 32,   │          0 │ add_2[0][0]     │   -   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_16 (Conv2D) │ (None, 32, 32,   │      2,320 │ re_lu_6[0][0]   │   Y   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 32, 32,   │         64 │ conv2d_16[0][0] │   Y   │
+│ (BatchNormalizati… │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_7 (ReLU)     │ (None, 32, 32,   │          0 │ batch_normaliz… │   -   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_15 (Conv2D) │ (None, 32, 32,   │        272 │ re_lu_6[0][0]   │   Y   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_17 (Conv2D) │ (None, 32, 32,   │      2,320 │ re_lu_7[0][0]   │   Y   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 32, 32,   │         64 │ conv2d_15[0][0] │   Y   │
+│ (BatchNormalizati… │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 32, 32,   │         64 │ conv2d_17[0][0] │   Y   │
+│ (BatchNormalizati… │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_3 (Add)        │ (None, 32, 32,   │          0 │ batch_normaliz… │   -   │
+│                    │ 16)              │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_8 (ReLU)     │ (None, 32, 32,   │          0 │ add_3[0][0]     │   -   │
+│                    │ 16)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_19 (Conv2D) │ (None, 16, 16,   │      4,640 │ re_lu_8[0][0]   │   Y   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 16, 16,   │        128 │ conv2d_19[0][0] │   Y   │
+│ (BatchNormalizati… │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_9 (ReLU)     │ (None, 16, 16,   │          0 │ batch_normaliz… │   -   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_18 (Conv2D) │ (None, 16, 16,   │        544 │ re_lu_8[0][0]   │   Y   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_20 (Conv2D) │ (None, 16, 16,   │      9,248 │ re_lu_9[0][0]   │   Y   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 16, 16,   │        128 │ conv2d_18[0][0] │   Y   │
+│ (BatchNormalizati… │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 16, 16,   │        128 │ conv2d_20[0][0] │   Y   │
+│ (BatchNormalizati… │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_4 (Add)        │ (None, 16, 16,   │          0 │ batch_normaliz… │   -   │
+│                    │ 32)              │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_10 (ReLU)    │ (None, 16, 16,   │          0 │ add_4[0][0]     │   -   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_22 (Conv2D) │ (None, 16, 16,   │      9,248 │ re_lu_10[0][0]  │   Y   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 16, 16,   │        128 │ conv2d_22[0][0] │   Y   │
+│ (BatchNormalizati… │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_11 (ReLU)    │ (None, 16, 16,   │          0 │ batch_normaliz… │   -   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_21 (Conv2D) │ (None, 16, 16,   │      1,056 │ re_lu_10[0][0]  │   Y   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_23 (Conv2D) │ (None, 16, 16,   │      9,248 │ re_lu_11[0][0]  │   Y   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 16, 16,   │        128 │ conv2d_21[0][0] │   Y   │
+│ (BatchNormalizati… │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 16, 16,   │        128 │ conv2d_23[0][0] │   Y   │
+│ (BatchNormalizati… │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_5 (Add)        │ (None, 16, 16,   │          0 │ batch_normaliz… │   -   │
+│                    │ 32)              │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_12 (ReLU)    │ (None, 16, 16,   │          0 │ add_5[0][0]     │   -   │
+│                    │ 32)              │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_25 (Conv2D) │ (None, 8, 8, 64) │     18,496 │ re_lu_12[0][0]  │   Y   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 8, 8, 64) │        256 │ conv2d_25[0][0] │   Y   │
+│ (BatchNormalizati… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_13 (ReLU)    │ (None, 8, 8, 64) │          0 │ batch_normaliz… │   -   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_24 (Conv2D) │ (None, 8, 8, 64) │      2,112 │ re_lu_12[0][0]  │   Y   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_26 (Conv2D) │ (None, 8, 8, 64) │     36,928 │ re_lu_13[0][0]  │   Y   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 8, 8, 64) │        256 │ conv2d_24[0][0] │   Y   │
+│ (BatchNormalizati… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 8, 8, 64) │        256 │ conv2d_26[0][0] │   Y   │
+│ (BatchNormalizati… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_6 (Add)        │ (None, 8, 8, 64) │          0 │ batch_normaliz… │   -   │
+│                    │                  │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_14 (ReLU)    │ (None, 8, 8, 64) │          0 │ add_6[0][0]     │   -   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_28 (Conv2D) │ (None, 8, 8, 64) │     36,928 │ re_lu_14[0][0]  │   Y   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 8, 8, 64) │        256 │ conv2d_28[0][0] │   Y   │
+│ (BatchNormalizati… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_15 (ReLU)    │ (None, 8, 8, 64) │          0 │ batch_normaliz… │   -   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_27 (Conv2D) │ (None, 8, 8, 64) │      4,160 │ re_lu_14[0][0]  │   Y   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ conv2d_29 (Conv2D) │ (None, 8, 8, 64) │     36,928 │ re_lu_15[0][0]  │   Y   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 8, 8, 64) │        256 │ conv2d_27[0][0] │   Y   │
+│ (BatchNormalizati… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ batch_normalizati… │ (None, 8, 8, 64) │        256 │ conv2d_29[0][0] │   Y   │
+│ (BatchNormalizati… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ add_7 (Add)        │ (None, 8, 8, 64) │          0 │ batch_normaliz… │   -   │
+│                    │                  │            │ batch_normaliz… │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ re_lu_16 (ReLU)    │ (None, 8, 8, 64) │          0 │ add_7[0][0]     │   -   │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ global_average_po… │ (None, 64)       │          0 │ re_lu_16[0][0]  │   -   │
+│ (GlobalAveragePoo… │                  │            │                 │       │
+├────────────────────┼──────────────────┼────────────┼─────────────────┼───────┤
+│ dense_4 (Dense)    │ (None, 4)        │        260 │ global_average… │   Y   │
+└────────────────────┴──────────────────┴────────────┴─────────────────┴───────┘
+ Total params: 184,916 (722.33 KB)
+ Trainable params: 183,460 (716.64 KB)
+ Non-trainable params: 1,456 (5.69 KB)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile the model</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>resnet61_model <span class="sc">%&gt;%</span> <span class="fu">compile</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">optimizer =</span> <span class="fu">optimizer_adam</span>(<span class="at">learning_rate =</span> <span class="fl">0.001</span>),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">loss =</span> <span class="st">"sparse_categorical_crossentropy"</span>, </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"accuracy"</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="train-resnet-model" class="level2">
+<h2 class="anchored" data-anchor-id="train-resnet-model">Train ResNet Model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>history <span class="ot">&lt;-</span> resnet61_model <span class="sc">%&gt;%</span> <span class="fu">fit</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  train_tumor,  <span class="co"># Replace with your training dataset</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">10</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/10
+179/179 - 40s - 222ms/step - accuracy: 0.7337 - loss: 0.6790
+Epoch 2/10
+179/179 - 36s - 202ms/step - accuracy: 0.8456 - loss: 0.4117
+Epoch 3/10
+179/179 - 36s - 199ms/step - accuracy: 0.8948 - loss: 0.2936
+Epoch 4/10
+179/179 - 35s - 193ms/step - accuracy: 0.9193 - loss: 0.2313
+Epoch 5/10
+179/179 - 34s - 188ms/step - accuracy: 0.9431 - loss: 0.1707
+Epoch 6/10
+179/179 - 33s - 187ms/step - accuracy: 0.9524 - loss: 0.1330
+Epoch 7/10
+179/179 - 33s - 186ms/step - accuracy: 0.9618 - loss: 0.1157
+Epoch 8/10
+179/179 - 34s - 190ms/step - accuracy: 0.9697 - loss: 0.0887
+Epoch 9/10
+179/179 - 34s - 189ms/step - accuracy: 0.9748 - loss: 0.0835
+Epoch 10/10
+179/179 - 34s - 188ms/step - accuracy: 0.9809 - loss: 0.0575</code></pre>
+</div>
+</div>
+</section>
+<section id="test-resnet-model" class="level2">
+<h2 class="anchored" data-anchor-id="test-resnet-model">Test ResNet Model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evaluate</span>(resnet61_model, test_tumor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>41/41 - 2s - 60ms/step - accuracy: 0.8436 - loss: 0.5941</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$accuracy
+[1] 0.8436308
+
+$loss
+[1] 0.5940884</code></pre>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Overall, the Vgg16 Multi-layer model performed the best for our brain tumor image classification. It was expected result as the res-net model shines in very deep networks since it is able to generalize better while that is where the vgg struggles, in our case we had not applied very deep networks due to the computational cost. Furthermore, the Vgg model is great with smaller data sets which is what we used to test these models and on the other end of the spectrum, the res-net model is great for large-scale, complex tasks. In the end, our model performances really depended on our data and application.</p>
 </section>
 </section>
 

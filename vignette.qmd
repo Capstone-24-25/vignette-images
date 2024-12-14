@@ -1,6 +1,6 @@
 ---
 title: "vignette-images"
-Author: David Pan, James San, Peter Xiong, Amy Ji
+author: "David Pan, James San, Peter Xiong, Amy Ji"
 format: html
 editor: visual
 ---
@@ -283,6 +283,7 @@ evaluate(model_vgg16, test_tumor)
 ```
 
 This model is able to converge to a higher accuracy in a fewer amount of epochs, and the testing accuracy is improved drastically. 
+
 ## ResNet Model
 
 Simplified version of the ResNet Model.
@@ -294,8 +295,6 @@ The ResNet model utilizes skip connections, also known as residual connections, 
 We first introduce the residual block which defines the structure of each block in the network, we have the shortcut which is essentially the input. The if statement deals with dimensional errors that occur after down sampling, the main path and shortcut paths may not align dimensionally so we apply a 1x1 convolution to the shortcut dimensions. Afterwards we create our convolution blocks and normalization and non-linearity layers. At the end we combine the shortcut, input, with the main path output to create a final output.
 
 ```{r}
-library(keras)
-
 residual_block <- function(input, filters, strides = c(1, 1)) {
 
   shortcut <- input
@@ -400,7 +399,6 @@ history <- resnet61_model %>% fit(
 ```{r}
 evaluate(resnet61_model, test_tumor)
 ```
-
 
 ## Conclusion
 
