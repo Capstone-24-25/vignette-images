@@ -1,15 +1,20 @@
 ---
 title: "vignette-images"
+Author: David Pan, James San, Peter Xiong, Amy Ji
 format: html
 editor: visual
 ---
 
 # Image Classification with CNN
 
+Convolutional Neural Networks (CNNs) are deep learning models that extract features from images using convolutional layers, followed by pooling and fully connected layers for tasks like image classification. They excel in capturing spatial hierarchies and patterns, making them ideal for analyzing visual data.
+
+There are three types of CNN architecture which are the convolutional layers, pooling layers, and fully-connected (FC) layers. When these layers are stacked, a CNN architecture will be formed. In addition to these three layers, there is a more important parameter which is the activation function.
+
+
 ## Data
 
 Worldwide 300,000 people are diagnosed with brain tumors annually with nearly one-third of these cases being cancerous. These characteristics immediately make brain tumors a pressing issue, however brain tumors are very diverse thus would require extensive scans to diagnose specific brain tumor types. This is where image classification comes in, specifically we will be applying a convolutional neural network model. A CNN model strengths lie in it's ability to identify patterns in images and extract features from data which is great for identifying specific brain tumors. In our case, we will be dealing with the three most common types, glioma, meningioma, and pituitary tumors as well as no tumor cases. The data set we will be using contains 7023 MRI images all classified in one of the four classes. With the use of artificial intelligence it could lead to faster detections, personalized treatments, and improved planning.
-
 
 ```{r}
 # packages
@@ -40,7 +45,9 @@ test_tumor <- image_dataset_from_directory(
 ```
 
 ## Visualize Data
+
 Examine a batch of 32 images.
+
 ```{r}
 batch <- train_tumor %>% as_iterator() %>% iter_next()
 
@@ -69,6 +76,12 @@ for (i in 1:32){
 }
 ```
 
+### Data Preprocessing
+
+We utilized a code (the specific code is in the script section of the repository with the name Preprocessing.R) which performs automated preprocessing and resizing of images stored in a nested directory structure using the “EBImage” and “fs” packages in R. The preprocess_image function processes a single image by converting it to grayscale, applying Gaussian blur, thresholding it to create a binary mask, and performing morphological operations (erosion and dilation) to reduce noise.
+
+It then identifies the largest connected component in the binary image, calculates its bounding box, crops the image to this region, and resizes it to the specified dimensions (default: 256x256 pixels). The resize_images_in_directory function applies this preprocessing to all images within a specified input directory, recursively traversing through subdirectories. For each subdirectory, it mirrors the structure in a specified output directory, processes all images within, and saves the resized images to the corresponding subdirectory in the output directory. This would make batch preprocessing large datasets of image really convenient since the directory structure is maintained.
+
 ### What is glioma?
 
 Glioma is a type of brain tumor that originates from glial cells in the spinal cord and brain, it is the most common cancerous brain tumor and makes up one-third of all brain tumors.
@@ -85,7 +98,7 @@ A type of brain tumor that grows in the membrane that cover the brain and spinal
 display_image(images[13,,,])
 ```
 
-### What is a  pituitary tumor?
+### What is a pituitary tumor?
 
 The pituitary is a small gland found at the base of the brain, directly in line with the top of your nose. They account for 10-15% of all brain tumors and most are non-cancerous, causing no symptoms. Rarely is it cancerous, less than 0.1%.
 
@@ -101,10 +114,9 @@ The data set also contains images of non-tumor brains.
 display_image(images[30,,,])
 ```
 
-
 ## Single Layer Model
 
-First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model.
+First we test out the most basic neural network, which includes just a single layer. Since the data is a 3 dimensional matrix of numbers, we need to flatten it into a single dimension before feeding it into the model to make predictions.
 
 ### Define model architecture
 
@@ -137,8 +149,6 @@ history_single_layer <- model_single_layer %>%
   fit(train_tumor, epochs = 20)
 ```
 
-
-
 ### Test model
 
 ```{r}
@@ -146,8 +156,6 @@ evaluate(model_single_layer, test_tumor)
 ```
 
 This accuracy is not bad for a single layer model, but there is a lot of room for improvement. The testing accuracy is lower than our training accuracy, which is a sign that the model is overfitting the training data.
-
-
 
 ## Data Augmentation
 
@@ -205,22 +213,11 @@ history_aug <- model_aug %>%
 evaluate(model_aug, test_tumor)
 ```
 
-Data augmentation provides a boost in testing accuracy due to reduced overfitting.
+Data augmentation provides a slight boost in testing accuracy due to reduced overfitting, which allows the model to better generalize to new, unseen data.
 
+## Multi Layer CNN Model
 
-## Multi Layer Model
-Simplified version of the VGG-16 model architecture. 
-
-Explanation of what the different types of layers do:
-
-convolutional 2d layer: Extracts features from the image, which is specified by the number of filters. Padding adds pixels around the image to ensure that the input size and output size are matching. 
-
-max pooling layer: Takes the maximum value from each 2x2 grid of pixels. This reduces the dimensionality and makes the model more robust to small changes.
-
-dropout layer: Randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.
-
-dense layer: Typically at the end of model, connects each neuron to the output layer in order to make the final prediction. We used the softmax activation function since there are multiple classes.
-
+We used a simplified version of the VGG-16 model architecture.
 
 ```{r}
 model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
@@ -254,7 +251,17 @@ model_vgg16 <- keras_model_sequential(input_shape = c(256, 256, 3)) %>%
 summary(model_vgg16)
 ```
 
-## Compile model
+Here is a brief explanation of what the different types of layers do:
+
+Convolutional layers are the core building blocks of a Convolutional Neural Network (CNN). They are responsible for detecting patterns or features in input data, such as edges, textures, shapes, or more abstract details, depending on the layer's depth. They take in an input image or feature map (e.g., a 256×256×3 image with height, width, and color channels for RGB). Then the kernel, a small matrix (3×3 in this case) slides over the input, performing an operation called a convolution. Each kernel is designed to detect specific features in the image. The convolution operation produces a feature map, showing where certain features are detected in the input. If the input is an image and the filter detects edges, the feature map highlights the edges.
+
+Pooling layers are used to reduce the spatial dimensions (height and width) of feature maps while retaining their most important information. This makes the model more computationally efficient and helps prevent overfitting. Pooling divides the input feature map into non-overlapping or overlapping regions and reduces each region to a single value.
+
+The dropout layer randomly assigns inputs to 0, which reduces overfitting and allows the model to generalize to new data.
+
+Fully connected layers are used in the final stages of a CNN to perform classification or regression tasks. In these layers, every neuron is connected to every neuron in the previous layer. Each neuron in a fully connected layer receives inputs from all neurons of the previous layer, with each connection having a specific weight and each neuron incorporating a bias. The input to each neuron is a weighted sum of these inputs plus a bias. The weighted sum is then processed through a non-linear activation function, such as ReLU, Sigmoid, or Tanh. This step introduces non-linearity, enabling the network to learn complex functions.
+
+### Compile model
 
 ```{r}
 model_vgg16 %>% compile(loss = 'crossentropy',
@@ -262,19 +269,20 @@ model_vgg16 %>% compile(loss = 'crossentropy',
                   metrics = 'accuracy')
 ```
 
-## Train model
+### Train model
 
 ```{r}
 history_vgg16 <- model_vgg16 %>%
   fit(train_tumor, epochs = 10)
 ```
 
-## Test model
+### Test model
 
 ```{r}
 evaluate(model_vgg16, test_tumor)
 ```
 
+This model is able to converge to a higher accuracy in a fewer amount of epochs, and the testing accuracy is improved drastically. 
 ## ResNet Model
 
 Simplified version of the ResNet Model.
