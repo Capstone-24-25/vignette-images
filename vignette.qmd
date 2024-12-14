@@ -275,4 +275,126 @@ history_vgg16 <- model_vgg16 %>%
 evaluate(model_vgg16, test_tumor)
 ```
 
+## ResNet Model
+
+Simplified version of the ResNet Model.
+
+Type of CNN model that introduces residual learning to deal with the issue of vanishing and exploding gradients that other models face in very deep networks.
+
+The ResNet model utilizes skip connections, also known as residual connections, which bypasses one or more layers and directly connects the input back with the output of the main path which undergoes the normal sequence through all the convolutional blocks. This way the residuals from the input are preserved and can flow through the network while remaining significant.
+
+We first introduce the residual block which defines the structure of each block in the network, we have the shortcut which is essentially the input. The if statement deals with dimensional errors that occur after down sampling, the main path and shortcut paths may not align dimensionally so we apply a 1x1 convolution to the shortcut dimensions. Afterwards we create our convolution blocks and normalization and non-linearity layers. At the end we combine the shortcut, input, with the main path output to create a final output.
+
+```{r}
+library(keras)
+
+residual_block <- function(input, filters, strides = c(1, 1)) {
+
+  shortcut <- input
+  
+  if (input$shape[[3]] != filters || !all(strides == c(1, 1))) {
+    shortcut <- layer_conv_2d(
+      filters = filters,
+      kernel_size = c(1, 1),
+      strides = strides,
+      padding = "same",
+      activation = NULL
+    )(input)
+    shortcut <- layer_batch_normalization()(shortcut)
+  }
+  
+  # First convolution
+  x <- layer_conv_2d(
+    filters = filters,
+    kernel_size = c(3, 3),
+    strides = strides,
+    padding = "same",
+    activation = NULL
+  )(input)
+  x <- layer_batch_normalization()(x)
+  x <- layer_activation_relu()(x)
+  
+  # Second convolution
+  x <- layer_conv_2d(
+    filters = filters,
+    kernel_size = c(3, 3),
+    strides = c(1, 1),
+    padding = "same",
+    activation = NULL
+  )(x)
+  x <- layer_batch_normalization()(x)
+  
+  # Add shortcut and output
+  x <- layer_add(list(shortcut, x))
+  x <- layer_activation_relu()(x)
+  
+  return(x)
+}
+
+# Define the ResNet Model
+input_layer <- layer_input(shape = c(img_height, img_width, 3))
+
+# Initial Convolution and Pooling
+x <- layer_conv_2d(filters = 8, kernel_size = c(7, 7), strides = c(2, 2), padding = "same")(input_layer)
+x <- layer_batch_normalization()(x)
+x <- layer_activation_relu()(x)
+x <- layer_max_pooling_2d(pool_size = c(3, 3), strides = c(2, 2), padding = "same")(x)
+
+# Residual Blocks
+x <- residual_block(x, filters = 8)
+x <- residual_block(x, filters = 8)
+x <- residual_block(x, filters = 16, strides = c(2, 2))  # Downsample
+x <- residual_block(x, filters = 16)
+x <- residual_block(x, filters = 32, strides = c(2, 2))  # Downsample
+x <- residual_block(x, filters = 32)
+x <- residual_block(x, filters = 64, strides = c(2, 2))  # Downsample
+x <- residual_block(x, filters = 64)
+
+
+# Fully Connected Layers
+x <- layer_global_average_pooling_2d()(x)
+output_layer <- layer_dense(units = 4, activation = "softmax")(x)
+```
+
+Once we have the residual blocks created we define the model, apply a initial convolution and down sample. This way we take the input and begin with a larger filter, 7x7, which is able to capture larger shapes and patterns and allowing us to start with a larger receptive field to get the broader features early on, our normal filter size would be 3x3. The down sampling reduces the spatial dimensions of the feature map to increase field of view that layers process. As a result, higher level features are emphasized while the lower-level ones are essentially phased out. Afterwards we call our residual blocks that we had defined above, 8 in total, we increase the filter number every time we down sample to compensate for the decreased spatial dimensions and also the deeper layers have more filters to get more abstract features which is critical for that stage.
+
+We have a total of 61 layers.
+
+## Compile ResNet Model
+
+```{r}
+# Compile the Model
+resnet61_model <- keras_model(inputs = input_layer, outputs = output_layer)
+
+# Print Model Summary
+summary(resnet61_model)
+
+# Compile the model
+resnet61_model %>% compile(
+  optimizer = optimizer_adam(learning_rate = 0.001),
+  loss = "sparse_categorical_crossentropy", 
+  metrics = c("accuracy")
+)
+```
+
+## Train ResNet Model
+
+```{r}
+# Train the model
+history <- resnet61_model %>% fit(
+  train_tumor,  # Replace with your training dataset
+  epochs = 10
+)
+```
+
+## Test ResNet Model
+
+```{r}
+evaluate(resnet61_model, test_tumor)
+```
+
+
+## Conclusion
+
+Overall, the Vgg16 Multi-layer model performed the best for our brain tumor image classification. It was expected result as the res-net model shines in very deep networks since it is able to generalize better while that is where the vgg struggles, in our case we had not applied very deep networks due to the computational cost. Furthermore, the Vgg model is great with smaller data sets which is what we used to test these models and on the other end of the spectrum, the res-net model is great for large-scale, complex tasks. In the end, our model performances really depended on our data and application.
 
